@@ -1,7 +1,8 @@
 NAME		= miniRT
 
 SRCS 		= main.c \
-			  win_cnv.c
+			  canvas.c \
+			  window.c
 
 OBJS		= $(SRCS:.c=.o)
 
