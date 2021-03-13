@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/09 21:19:23 by kbraum            #+#    #+#             */
-/*   Updated: 2021/03/12 22:37:09 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/03/13 23:08:29 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,23 +52,50 @@ void	rt_read(t_data *data, char *file)
 	close(fd);
 }
 
+t_coord	get_vektor(t_coord start, t_coord end)
+{
+	t_coord		v;
+
+	v.x = end.x - start.x;
+	v.y = end.y - start.y;
+	v.z = end.z - start.z;
+	return (v);
+}
+
+double	vektor_len(t_coorf v)
+{
+	return (sqrt(v.x * v.x + v.y * v.y + v.z * v.z));
+}
+
+double	dot_product(t_coord v1, t_coord v2)
+{
+	return (v1.x * v2.x + v1.y * v2.y + v1.z * v2.z);
+}
+
+int		trace_ray;
+
 int		main(int argc, char **argv)
 {
 	t_data	data;
 	t_cam	cam;
+	t_dot	dot;
 
 	if (argc != 2)
 		return (printf("...\n"));
 	data.mlx = mlx_init();
 	rt_read(&data, argv[1]);
-	cam = camera_init();
 	data.img = image_init(&data);
-	for (int i = 0; i < data.win.h; i++) {
-		for(int j = 0; j < data.win.h; j++) {
-			int color = trgb_init(0, 255, 255, 0);
-			color = color_shade(color, (double)(i + j) / (data.win.h + data.win.w));
-			pixel_put(&data.img, j, i, color);
+	dot.i = -data.win.h / 2 ;
+	while (dot.i < data.win.h / 2)
+	{
+		dot.j = -data.win.w / 2;
+		while (dot.j < data.win.w / 2)
+		{
+			dot.color = trace_ray(&cam, &dot, 1, INF);
+			pixel_put(&data.img, get_coord_s(&dot, &data.win));
+			dot.j++;
 		}
+		dot.i++;
 	}
 	mlx_put_image_to_window(data.mlx, data.win.ptr, data.img.ptr, 0, 0);
 	mlx_loop(data.mlx);

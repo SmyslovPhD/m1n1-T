@@ -6,14 +6,14 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 20:23:35 by kbraum            #+#    #+#             */
-/*   Updated: 2021/03/12 21:58:12 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/03/13 20:38:55 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINIRT_H
 
 # define MINIRT_H
-# define WIN_SIZE 512, 512
+# define INF 0xffffffff
 
 # include "../libft/libft.h"
 # include <mlx.h>
@@ -45,26 +45,38 @@ typedef struct	s_data
 	t_img		img;
 }				t_data;
 
-typedef	struct	s_dot
+typedef struct	s_dot
+{
+	int			i;
+	int			j;
+	int			color;
+}				t_dot;
+
+typedef	struct	s_coord
 {	
 	double		x;
 	double		y;
 	double		z;
-}				t_dot;
+}				t_coord;
 
 typedef struct	s_cam
 {
-	t_dot		coord;
-	t_dot		ang;
+	t_coord		coord;
+	t_coord		ang;
 	int			fov;
 }				t_cam;
 
+typedef struct	s_pov
+{
+	int		w;
+	int		h;
+}				t_pov;
+
 t_win			win_init(void *mlx, char *line);
-void			pixel_put(t_img *img, int x, int y, int color);
+void	pixel_put(t_img *img, t_dot dot);
+t_dot	get_coord_s(t_dot *dot, t_win *win);
 int				get_cx(int x, t_win *win);
 int				get_cy(int y, t_win *win);
-int				get_sx(int x, t_win *win);
-int				get_sy(int y, t_win *win);
 int				trgb_init(int t, int r, int g, int b);
 int				trgb_get_t(int trgb);
 int				trgb_get_r(int trgb);

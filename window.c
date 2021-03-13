@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 20:02:56 by kbraum            #+#    #+#             */
-/*   Updated: 2021/03/12 20:08:54 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/03/13 20:30:28 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,20 +32,20 @@ t_win	win_init(void *mlx, char *line)
 	return (win);
 }
 
-void	pixel_put(t_img *img, int x, int y, int color)
+void	pixel_put(t_img *img, t_dot dot)
 {
 	char	*dst;
 
-	dst = img->addr + (y * img->lnlen + x * (img->bpp / 8));
-	*(unsigned int*)dst = color;
+	dst = img->addr + (dot.i * img->lnlen + dot.j * (img->bpp / 8));
+	*(unsigned int*)dst = dot.color;
 }
 
-int		get_sx(int x, t_win *win)
+t_dot	get_coord_s(t_dot *dot, t_win *win)
 {
-	return (win->w / 2 + x);
-}
+	t_dot	d;
 
-int		get_sy(int y, t_win *win)
-{
-	return (win->h / 2 + y);
+	d.j = win->w / 2 + dot->j;
+	d.i = win->h / 2 + dot->i;
+	d.color = dot->color;
+	return (d);
 }
