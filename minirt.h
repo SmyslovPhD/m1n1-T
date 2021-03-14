@@ -6,21 +6,35 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 20:23:35 by kbraum            #+#    #+#             */
-/*   Updated: 2021/03/13 20:38:55 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/03/14 21:34:34 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINIRT_H
 
 # define MINIRT_H
-# define INF 0xffffffff
+# define INF 0x100000000
 
-# include "../libft/libft.h"
+# include "libft/libft.h"
 # include <mlx.h>
 # include <math.h>
 # include <stdio.h>
 # include <unistd.h>
 # include <fcntl.h>
+
+typedef struct	s_dot
+{
+	int			i;
+	int			j;
+	int			color;
+}				t_dot;
+
+typedef	struct	s_coord
+{	
+	double		x;
+	double		y;
+	double		z;
+}				t_coord;
 
 typedef struct	s_img
 {
@@ -45,20 +59,6 @@ typedef struct	s_data
 	t_img		img;
 }				t_data;
 
-typedef struct	s_dot
-{
-	int			i;
-	int			j;
-	int			color;
-}				t_dot;
-
-typedef	struct	s_coord
-{	
-	double		x;
-	double		y;
-	double		z;
-}				t_coord;
-
 typedef struct	s_cam
 {
 	t_coord		coord;
@@ -66,15 +66,17 @@ typedef struct	s_cam
 	int			fov;
 }				t_cam;
 
-typedef struct	s_pov
+typedef struct	s_sphere
 {
-	int		w;
-	int		h;
-}				t_pov;
+	t_coord		p;
+	double		r;
+	int			color;
+}				t_sphere;
 
 t_win			win_init(void *mlx, char *line);
-void	pixel_put(t_img *img, t_dot dot);
-t_dot	get_coord_s(t_dot *dot, t_win *win);
+t_sphere		*sphere_init(t_coord center, double diameter, int color);
+void			pixel_put(t_img *img, t_dot dot);
+t_dot			get_coord_s(t_dot *dot, t_win *win);
 int				get_cx(int x, t_win *win);
 int				get_cy(int y, t_win *win);
 int				trgb_init(int t, int r, int g, int b);

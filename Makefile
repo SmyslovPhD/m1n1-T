@@ -4,7 +4,8 @@ SRCS 		=  canvas.c \
 			   color_fx.c \
 			   main.c \
 			   trgb.c \
-			   window.c
+			   window.c \
+			   sphere.c
 
 OBJS		= $(SRCS:.c=.o)
 
