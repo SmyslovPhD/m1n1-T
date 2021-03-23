@@ -6,14 +6,16 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 20:23:35 by kbraum            #+#    #+#             */
-/*   Updated: 2021/03/14 21:34:34 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/03/23 20:03:49 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINIRT_H
 
 # define MINIRT_H
+
 # define INF 0x100000000
+# define ID_SP 1
 
 # include "libft/libft.h"
 # include <mlx.h>
@@ -21,20 +23,26 @@
 # include <stdio.h>
 # include <unistd.h>
 # include <fcntl.h>
+# include <errno.h>
+
+typedef	struct	s_coord
+{
+	double		x;
+	double		y;
+	double		z;
+}				t_coord;
+
+typedef	t_coord	t_vector;
 
 typedef struct	s_dot
 {
 	int			i;
 	int			j;
-	int			color;
 }				t_dot;
 
-typedef	struct	s_coord
-{	
-	double		x;
-	double		y;
-	double		z;
-}				t_coord;
+/*
+** 				for canvas
+*/
 
 typedef struct	s_img
 {
@@ -45,46 +53,104 @@ typedef struct	s_img
 	int			endian;
 }				t_img;
 
-typedef struct	s_win
+typedef	struct	s_camera
 {
-	void		*ptr;
-	int			w;
-	int			h;
-}				t_win;
-
-typedef struct	s_data
-{
-	void		*mlx;
-	t_win		win;
-	t_img		img;
-}				t_data;
-
-typedef struct	s_cam
-{
-	t_coord		coord;
-	t_coord		ang;
+	t_coord		pos;
+	t_vector	ang;
 	int			fov;
-}				t_cam;
+}				t_camera;
+
+typedef	struct	s_canvas
+{
+	t_img		img;
+	t_camera	cam;
+}				t_canvas;
+
+/*
+**				for scene
+*/
 
 typedef struct	s_sphere
 {
-	t_coord		p;
-	double		r;
-	int			color;
+	t_coord		pos;
+	double		radius;
 }				t_sphere;
 
-t_win			win_init(void *mlx, char *line);
-t_sphere		*sphere_init(t_coord center, double diameter, int color);
-void			pixel_put(t_img *img, t_dot dot);
-t_dot			get_coord_s(t_dot *dot, t_win *win);
-int				get_cx(int x, t_win *win);
-int				get_cy(int y, t_win *win);
+typedef struct	s_figure
+{
+	char		id;
+	void		*param;
+	int			color;
+}				t_figure;
+
+typedef struct	s_amb
+{
+	double		ratio;
+	int			color;
+}				t_amb;
+
+typedef struct	s_scene
+{
+	t_list		*figures;
+	t_list		*lights;
+	//t_amb		ambient;
+}				t_scene;
+
+typedef struct	s_win
+{
+	void		*ptr;
+	int			width;
+	int			height;
+}				t_win;
+
+typedef	struct	s_data
+{
+	void		*mlx;
+	t_win		win;
+	t_list		*cnvs;
+	t_scene		scene;
+}				t_data;
+
+extern t_data	g_data;
+
+/*
+**				vector_func
+*/
+
+t_coord			vector_init(double x, double y, double z);
+t_coord			get_vector(t_coord start, t_coord end);
+t_vector		vector_normalize(t_vector v);
+double			vector_len(t_coord v);
+double			dot_product(t_coord v1, t_coord v2);
+
+/*
+**				window_func
+*/
+
 int				trgb_init(int t, int r, int g, int b);
 int				trgb_get_t(int trgb);
 int				trgb_get_r(int trgb);
 int				trgb_get_g(int trgb);
 int				trgb_get_b(int trgb);
-int				color_add(int c1, int c2);
-int				color_shade(int c, double shade);
+
+/*
+**				read_func
+*/
+
+t_coord			read_coord(char **line);
+t_vector		read_vector(char **line);
+int				read_color(char **line);
+
+/*
+**				window_func
+*/
+
+void			minirt_exit(char *line);
+
+/*
+**				sphere_func
+*/
+
+void			sphere_init(t_figure *fig, char **line);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 21:24:45 by kbraum            #+#    #+#             */
-/*   Updated: 2021/03/12 21:31:53 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/03/23 19:50:17 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,14 @@
 
 int		trgb_init(int t, int r, int g, int b)
 {
-	t = t > 0xff ? 0xff : t;
-	r = r > 0xff ? 0xff : r;
-	g = g > 0xff ? 0xff : g;
-	b = b > 0xff ? 0xff : b;
-
+	if (t > 0xff)
+		t = 0xff;
+	if (r > 0xff)
+		r = 0xff;
+	if (g > 0xff)
+		g = 0xff;
+	if (b > 0xff)
+		b = 0xff;
 	return (t << 24 | r << 16 | g << 8 | b);
 }
 

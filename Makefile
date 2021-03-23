@@ -1,11 +1,9 @@
 NAME		= miniRT
 
-SRCS 		=  canvas.c \
-			   color_fx.c \
-			   main.c \
+SRCS 		=  main.c \
+			   read.c \
 			   trgb.c \
-			   window.c \
-			   sphere.c
+			   vector.c
 
 OBJS		= $(SRCS:.c=.o)
 
