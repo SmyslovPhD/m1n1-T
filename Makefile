@@ -3,7 +3,8 @@ NAME		= miniRT
 SRCS 		=  main.c \
 			   read.c \
 			   trgb.c \
-			   vector.c
+			   vector.c \
+			   sphere.c
 
 OBJS		= $(SRCS:.c=.o)
 
