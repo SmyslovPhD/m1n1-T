@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 20:23:35 by kbraum            #+#    #+#             */
-/*   Updated: 2021/03/23 21:38:25 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/03/24 21:25:36 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,12 +140,19 @@ int				trgb_get_b(int trgb);
 int				read_coord(char **line, t_coord *dot);
 int				read_vector(char **line, t_vector *v);
 int				read_color(char **line, int *color);
+int				read_double(char **line, double *j);
 
 /*
 **				window_func
 */
 
 void			minirt_exit(char *line);
+
+/*
+**				figure_func
+*/
+
+void			*figure_init(char *line);
 
 /*
 **				sphere_func

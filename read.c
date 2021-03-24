@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 15:24:48 by kbraum            #+#    #+#             */
-/*   Updated: 2021/03/23 22:32:21 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/03/24 21:17:02 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,23 @@
 
 int			read_coord(char **line, t_coord *dot)
 {
-	char		*s;
-	s = *line;
-	while (*s == ' ' || *s == '\t')
-		s++;
-	if (!ft_isdigit(*s) && !ft_strchr("-.", *s))
+	while (**line == ' ' || **line == '\t')
+		(*line)++;
+	if (!ft_isdigit(**line) && !ft_strchr("-.", **line))
 		return (0);
-	dot->x = ft_atof(s);
-	while (ft_isdigit(*s) || ft_strchr("-.", *s))
-		s++;
-	if (*s != ',')
+	dot->x = ft_atof(*line);
+	while (ft_isdigit(**line) || ft_strchr("-.", **line))
+		(*line)++;
+	if (**line != ',')
 		return (0);
-	dot->y = ft_atof(++s);
-	while (ft_isdigit(*s) || ft_strchr("-.", *s))
-		s++;
-	if (*s != ',')
+	dot->y = ft_atof(++(*line));
+	while (ft_isdigit(**line) || ft_strchr("-.", **line))
+		(*line)++;
+	if (**line != ',')
 		return (0);
-	dot->z = ft_atof(++s);
-	while (ft_isdigit(*s) || ft_strchr("-.", *s))
-		s++;
-	*line = s;
+	dot->z = ft_atof(++(*line));
+	while (ft_isdigit(**line) || ft_strchr("-.", **line))
+		(*line)++;
 	return (1);
 }
 
@@ -54,26 +51,36 @@ int			read_color(char **line, int *color)
 {
 	int		chanel[3];
 	int		i;
-	char	*s;
 
-	s = *line;
-	while (*s == '\t' || *s == ' ')
-		s++;
+	while (**line == '\t' || **line == ' ')
+		(*line)++;
 	i = 0;
 	while (i < 3)
 	{
-		if (!ft_isdigit(*s))
+		if (!ft_isdigit(**line))
 			return (0);
-		chanel[i] = ft_atoi(s);
-		while (ft_isdigit(*s))
-			s++;
-		if (chanel[i] > 255)
-			return (0);
-		if (i < 2 && *s == ',')
-			s++;
-		i++;
+		chanel[i] = ft_atoi(*line);
+		while (ft_isdigit(**line))
+			(*line)++;
+		if (i++ < 3 && **line == ',')
+			(*line)++;
 	}
-	*line = s;
+	while (**line == '\t' || **line == ' ')
+		(*line)++;
+	if (**line != '\0')
+		return (0);
 	*color = trgb_init(0, chanel[0], chanel[1], chanel[2]);
+	return (1);
+}
+
+int			read_double(char **line, double *j)
+{
+	while (**line == ' ' || **line == '\t')
+		(*line)++;
+	if (!(ft_isdigit(**line) || **line == '.'))
+		return (0);
+	*j = ft_atof(*line);
+	while (ft_isdigit(**line) || **line == '.')
+		(*line)++;
 	return (1);
 }

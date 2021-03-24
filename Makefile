@@ -4,6 +4,7 @@ SRCS 		=  main.c \
 			   read.c \
 			   trgb.c \
 			   vector.c \
+			   figure.c \
 			   sphere.c
 
 OBJS		= $(SRCS:.c=.o)
