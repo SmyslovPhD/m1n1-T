@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 20:23:35 by kbraum            #+#    #+#             */
-/*   Updated: 2021/03/24 21:25:36 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/03/29 20:15:30 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ typedef struct	s_scene
 {
 	t_list		*figures;
 	t_list		*lights;
-	//t_amb		ambient;
+	//t_amb		*ambient;
 }				t_scene;
 
 typedef struct	s_win
@@ -108,10 +108,13 @@ typedef	struct	s_data
 	void		*mlx;
 	t_win		win;
 	t_list		*cnvs;
-	t_scene		scene;
+	t_list		*figures;
+	t_list		*lights;
+	//t_amb		*ambient;
 }				t_data;
 
 extern t_data	g_data;
+void			data_init(char *file);
 
 /*
 **				vector_func
