@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 19:30:38 by kbraum            #+#    #+#             */
-/*   Updated: 2021/03/30 20:54:25 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/03/30 21:17:05 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,7 @@ void	parse_file(int fd)
 		if (n < 0)
 			minirt_exit(line);
 		if (*line == 'R')
-			//TODO window
-		window_init(line);
+			window_init(line);
 		else if (*line == 'A')
 			//TODO ambient
 			printf("Amb: %s\n", line);
