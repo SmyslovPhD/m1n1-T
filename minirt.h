@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 20:23:35 by kbraum            #+#    #+#             */
-/*   Updated: 2021/03/29 20:15:30 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/03/30 20:53:08 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,12 @@ extern t_data	g_data;
 void			data_init(char *file);
 
 /*
+**				window_func
+*/
+
+void			window_init(char *line);
+
+/*
 **				vector_func
 */
 
@@ -127,7 +133,7 @@ double			vector_len(t_coord v);
 double			dot_product(t_coord v1, t_coord v2);
 
 /*
-**				window_func
+**				trgb_func
 */
 
 int				trgb_init(int t, int r, int g, int b);
@@ -152,8 +158,9 @@ int				read_double(char **line, double *j);
 void			minirt_exit(char *line);
 
 /*
-**				figure_func
-*/
+**				figure_fu
+line++;
+g_data.win*/
 
 void			*figure_init(char *line);
 

@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 19:30:38 by kbraum            #+#    #+#             */
-/*   Updated: 2021/03/29 21:46:48 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/03/30 20:54:25 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,16 @@ void	parse_file(int fd)
 			minirt_exit(line);
 		if (*line == 'R')
 			//TODO window
-			printf("Win: %s\n", line);
-		if (*line == 'A')
+		window_init(line);
+		else if (*line == 'A')
 			//TODO ambient
 			printf("Amb: %s\n", line);
-		if (*line == 'c')
+		else if (*line == 'c')
 			//TODO camera
 			printf("cam: %s\n", line);
-		if (ft_strchr("s", *line))
+		else if (ft_strchr("s", *line))
 			ft_lstadd_back(&g_data.figures, ft_lstnew(figure_init(line)));
-		else if (*line == '\t' || *line == ' ')
+		else 
 			line_skip(line);
 		free(line);
 		n = get_next_line(fd, &line);

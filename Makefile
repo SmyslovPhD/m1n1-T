@@ -6,7 +6,8 @@ SRCS 		=  main.c \
 			   vector.c \
 			   figure.c \
 			   sphere.c \
-			   data.c
+			   data.c \
+			   window.c
 
 OBJS		= $(SRCS:.c=.o)
 
