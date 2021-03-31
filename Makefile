@@ -7,7 +7,8 @@ SRCS 		=  main.c \
 			   figure.c \
 			   sphere.c \
 			   data.c \
-			   window.c
+			   window.c \
+			   camera.c
 
 OBJS		= $(SRCS:.c=.o)
 

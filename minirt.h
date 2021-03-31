@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 20:23:35 by kbraum            #+#    #+#             */
-/*   Updated: 2021/03/30 20:53:08 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/03/31 19:47:11 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 # define MINIRT_H
 
-# define INF 0x100000000
+# define INF inf
 # define ID_SP 1
 
 # include "libft/libft.h"
@@ -65,6 +65,9 @@ typedef	struct	s_canvas
 	t_img		img;
 	t_camera	cam;
 }				t_canvas;
+
+void			camera_init(char *line);
+void			image_init(t_list *cnvs);
 
 /*
 **				for scene
@@ -162,7 +165,7 @@ void			minirt_exit(char *line);
 line++;
 g_data.win*/
 
-void			*figure_init(char *line);
+void			figure_init(char *line);
 
 /*
 **				sphere_func

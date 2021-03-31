@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 19:30:38 by kbraum            #+#    #+#             */
-/*   Updated: 2021/03/30 21:17:05 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/03/31 20:00:55 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,9 @@ void	parse_file(int fd)
 			//TODO ambient
 			printf("Amb: %s\n", line);
 		else if (*line == 'c')
-			//TODO camera
-			printf("cam: %s\n", line);
+			camera_init(line);
 		else if (ft_strchr("s", *line))
-			ft_lstadd_back(&g_data.figures, ft_lstnew(figure_init(line)));
+			figure_init(line);
 		else 
 			line_skip(line);
 		free(line);
@@ -68,4 +67,5 @@ void	data_init(char *file)
 		minirt_exit(0);
 	parse_file(fd);
 	close (fd);
+	image_init(g_data.cnvs);
 }
