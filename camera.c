@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 18:33:10 by kbraum            #+#    #+#             */
-/*   Updated: 2021/03/31 20:04:16 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/03/31 20:44:34 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,14 @@ void	camera_init(char *line)
 		minirt_exit(line);
 	cam = &(cnv->cam);
 	s = line + 1;
-	if (read_coord(&s, &(cam->pos)) == 0
-		|| read_vector(&s, &(cam->ang)) == 0)
+	if (read_coord(&s, &(cam->pos)) == 0 || read_vector(&s, &(cam->ang)) == 0)
 		minirt_exit(line);
 	cam->fov = ft_atoi(s);
-	while (ft_isdigit(*s) || *s == ' ' || *s == '\t')
+	while (*s == ' ' || *s == '\t')
+		s++;
+	while (ft_isdigit(*s))
+		s++;
+	while (*s == ' ' || *s == '\t')
 		s++;
 	if (*s != '\0' || cam->fov < 90 || cam->fov > 180)
 		minirt_exit(line);
@@ -40,6 +43,8 @@ void	image_init(t_list *cnvs)
 	t_win		*win;
 
 	win = &g_data.win;
+	if (win->ptr == 0)
+		minirt_exit(ft_strdup("NO_RESOLUTION"));
 	while (cnvs)
 	{
 		img = &((t_canvas *)cnvs->content)->img;

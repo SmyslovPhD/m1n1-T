@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 15:05:30 by kbraum            #+#    #+#             */
-/*   Updated: 2021/03/31 20:18:44 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/03/31 20:54:29 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,10 @@ int		main(int argc, char **argv)
 	t_canvas	*cnv = ((t_canvas *)g_data.cnvs->content);
 	printf("%f\n", sp->radius);
 	printf("%.f\n", cnv->cam.ang.z);
+	printf("%.i\n", cnv->img.lnlen);
+	for	(int i = 0; i < g_data.win.height; i++)
+		for (int j = 0; j < g_data.win.width; j++)
+			mlx_pixel_put(g_data.mlx, g_data.win.ptr, j, i,
+				trgb_init(0, i * 256 / g_data.win.height, j * 256 / g_data.win.width, 64));
 	mlx_loop(g_data.mlx);
 }
