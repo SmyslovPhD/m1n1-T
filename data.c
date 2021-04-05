@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 19:30:38 by kbraum            #+#    #+#             */
-/*   Updated: 2021/03/31 20:00:55 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/04/05 21:19:38 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,13 @@
 static void
 		line_skip(char *line)
 {
-	int		i;
+	char	*s;
 
-	i = 0;
-	while (line[i])
-	{
-		if (!(line[i] == ' ' || line[i] == '\t'))
+	s = line;
+	ft_printf("LINESKIP");
+	while (s)
+		if (ft_strchr(" \t", *(s++)) == 0)
 			minirt_exit(line);
-		i++;
-	}
 }
 
 void	parse_file(int fd)
@@ -38,14 +36,16 @@ void	parse_file(int fd)
 			minirt_exit(line);
 		if (*line == 'R')
 			window_init(line);
-		else if (*line == 'A')
-			//TODO ambient
-			printf("Amb: %s\n", line);
-		else if (*line == 'c')
+		if (*line == 'A')
+			ambient_init(line);
+		if (*line == 'l')
+			//TODO light_init(line);
+			printf("Lht: %s\n", line);
+		if (*line == 'c')
 			camera_init(line);
-		else if (ft_strchr("s", *line))
+		if (*line == 's')
 			figure_init(line);
-		else 
+		if (*line == ' ' || *line == '\t')
 			line_skip(line);
 		free(line);
 		n = get_next_line(fd, &line);
@@ -56,9 +56,7 @@ void	data_init(char *file)
 {
 	int		fd;
 
-	g_data.cnvs = 0;
-	g_data.figures = 0;
-	g_data.lights = 0;
+	//TODO set all pointer to NULL
 	g_data.mlx = mlx_init();
 	if (g_data.mlx == 0)
 		minirt_exit(0);
@@ -66,6 +64,8 @@ void	data_init(char *file)
 	if (fd < 0)
 		minirt_exit(0);
 	parse_file(fd);
-	close (fd);
+	close(fd);
+	g_data.win.ptr = mlx_new_window(g_data.mlx,
+		g_data.win.width, g_data.win.height, "miniRT");
 	image_init(g_data.cnvs);
 }

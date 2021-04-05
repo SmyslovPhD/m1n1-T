@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 20:23:35 by kbraum            #+#    #+#             */
-/*   Updated: 2021/03/31 19:47:11 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/04/05 21:11:21 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,12 +92,7 @@ typedef struct	s_amb
 	int			color;
 }				t_amb;
 
-typedef struct	s_scene
-{
-	t_list		*figures;
-	t_list		*lights;
-	//t_amb		*ambient;
-}				t_scene;
+void			ambient_init(char *line);
 
 typedef struct	s_win
 {
@@ -110,10 +105,10 @@ typedef	struct	s_data
 {
 	void		*mlx;
 	t_win		win;
+	t_amb		amb;
 	t_list		*cnvs;
 	t_list		*figures;
 	t_list		*lights;
-	//t_amb		*ambient;
 }				t_data;
 
 extern t_data	g_data;
@@ -161,9 +156,8 @@ int				read_double(char **line, double *j);
 void			minirt_exit(char *line);
 
 /*
-**				figure_fu
-line++;
-g_data.win*/
+**				figure_func
+*/
 
 void			figure_init(char *line);
 

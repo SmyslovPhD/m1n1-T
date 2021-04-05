@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 15:05:30 by kbraum            #+#    #+#             */
-/*   Updated: 2021/03/31 20:54:29 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/04/05 21:19:07 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	minirt_exit(char *line)
 {
 	if (line)
 	{
-		ft_printf("Error\non line: \"%s\"\n", line);
+		ft_printf("Error\n\"%s\"\n", line);
 		free(line);
 	}
 	exit(1);
@@ -40,6 +40,7 @@ int		main(int argc, char **argv)
 	for	(int i = 0; i < g_data.win.height; i++)
 		for (int j = 0; j < g_data.win.width; j++)
 			mlx_pixel_put(g_data.mlx, g_data.win.ptr, j, i,
-				trgb_init(0, i * 256 / g_data.win.height, j * 256 / g_data.win.width, 64));
+				trgb_init(0, i * 256 / g_data.win.height, j * 256 / g_data.win.width,
+				trgb_get_b(g_data.amb.color) * g_data.amb.ratio));
 	mlx_loop(g_data.mlx);
 }
