@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 20:29:50 by kbraum            #+#    #+#             */
-/*   Updated: 2021/04/05 21:15:39 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/04/08 21:20:18 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,18 @@ void	window_init(char *line)
 		minirt_exit(line);
 	tmp = line + 1;
 	tmp++;
-	win->width = ft_atoi(tmp);
+	win->w = ft_atoi(tmp);
 	while (*tmp == ' ' || *tmp == '\t')
 		tmp++;
 	while (ft_isdigit(*tmp))
 		tmp++;
-	win->height = ft_atoi(tmp);
+	win->h = ft_atoi(tmp);
 	while (*tmp == ' ' || *tmp == '\t')
 		tmp++;
 	while (ft_isdigit(*tmp))
 		tmp++;
 	while (*tmp == ' ' || *tmp == '\t')
 		tmp++;
-	if (win->width < 1 || win->height < 1)
+	if (win->w < 1 || win->h < 1)
 		minirt_exit(line);
 }

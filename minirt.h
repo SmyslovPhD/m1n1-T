@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 20:23:35 by kbraum            #+#    #+#             */
-/*   Updated: 2021/04/05 21:11:21 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/04/08 23:21:07 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 # define MINIRT_H
 
-# define INF inf
+# define INF 0x10000000
 # define ID_SP 1
 
 # include "libft/libft.h"
@@ -32,7 +32,18 @@ typedef	struct	s_coord
 	double		z;
 }				t_coord;
 
+/*
+**				vector_func
+*/
+
 typedef	t_coord	t_vector;
+
+t_vector		vector_init(double x, double y, double z);
+t_vector		get_vector(t_coord start, t_coord end);
+t_vector		vector_sum(t_vector a, t_vector b);
+t_vector		vector_normalize(t_vector v);
+double			vector_len(t_coord v);
+double			dot_product(t_coord v1, t_coord v2);
 
 typedef struct	s_dot
 {
@@ -73,19 +84,6 @@ void			image_init(t_list *cnvs);
 **				for scene
 */
 
-typedef struct	s_sphere
-{
-	t_coord		pos;
-	double		radius;
-}				t_sphere;
-
-typedef struct	s_figure
-{
-	char		id;
-	void		*param;
-	int			color;
-}				t_figure;
-
 typedef struct	s_amb
 {
 	double		ratio;
@@ -94,11 +92,36 @@ typedef struct	s_amb
 
 void			ambient_init(char *line);
 
+typedef struct	s_light
+{
+	t_coord		pos;
+	double		ratio;
+	int			color;
+}				t_light;
+
+void			light_init(char *line);
+
+typedef struct	s_figure
+{
+	char		id;
+	void		*param;
+	int			color;
+}				t_figure;
+
+typedef struct	s_sphere
+{
+	t_coord		pos;
+	double		radius;
+}				t_sphere;
+
+void			sphere_init(t_figure *fig, char *line);
+double			sphere_getdist(t_vector d, t_sphere *sp);
+
 typedef struct	s_win
 {
 	void		*ptr;
-	int			width;
-	int			height;
+	int			w;
+	int			h;
 }				t_win;
 
 typedef	struct	s_data
@@ -121,16 +144,6 @@ void			data_init(char *file);
 void			window_init(char *line);
 
 /*
-**				vector_func
-*/
-
-t_coord			vector_init(double x, double y, double z);
-t_coord			get_vector(t_coord start, t_coord end);
-t_vector		vector_normalize(t_vector v);
-double			vector_len(t_coord v);
-double			dot_product(t_coord v1, t_coord v2);
-
-/*
 **				trgb_func
 */
 
@@ -149,10 +162,6 @@ int				read_vector(char **line, t_vector *v);
 int				read_color(char **line, int *color);
 int				read_double(char **line, double *j);
 
-/*
-**				window_func
-*/
-
 void			minirt_exit(char *line);
 
 /*
@@ -160,11 +169,6 @@ void			minirt_exit(char *line);
 */
 
 void			figure_init(char *line);
-
-/*
-**				sphere_func
-*/
-
-void			sphere_init(t_figure *fig, char *line);
+double			figure_getdist(t_coord d, t_figure *fig);
 
 #endif

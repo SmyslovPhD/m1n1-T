@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/15 15:50:38 by kbraum            #+#    #+#             */
-/*   Updated: 2021/03/23 19:51:01 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/04/08 19:52:20 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,27 @@ t_vector	vector_init(double x, double y, double z)
 	return (v);
 }
 
-t_vector	vector_normalize(t_coord v)
+t_vector	vector_normalize(t_vector v)
 {
 	t_vector	vn;
 	double		len;
 
 	len = vector_len(v);
-	vn = vector_init(v.x / len, v.y / len, v.z / len);
+	vn.x = v.x / len;
+	vn.y = v.y / len;
+	vn.z = v.z / len;
 	return (vn);
+}
+
+t_vector	vector_sum(t_vector a, t_vector b)
+{
+	t_vector	c;
+
+	c.x = a.x + b.x;
+	c.y = a.y + b.y;
+	c.z = a.z + b.z;
+	
+	return (c);
 }
 
 t_vector	get_vector(t_coord start, t_coord end)

@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 15:05:30 by kbraum            #+#    #+#             */
-/*   Updated: 2021/04/05 21:19:07 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/04/08 23:46:12 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,23 +24,53 @@ void	minirt_exit(char *line)
 	exit(1);
 }
 
+int		raytrace(t_coord o, t_coord d, double start, double end)
+{
+	t_list	*elem;
+	int		color;
+	double	dist;
+
+	(void)o;
+	elem = g_data.figures;
+	d = vector_normalize(d);
+	color = g_data.amb.color;
+	while (elem)
+	{
+		dist = figure_getdist(d, ((t_figure *)elem->content));
+		if (dist < end && dist > start)
+		{
+			end = dist;
+			color = ((t_figure *)elem->content)->color;
+		}
+		elem = elem->next;
+	}
+	return (color);
+}
+
 int		main(int argc, char **argv)
 {
-	(void)argv;
-	(void)argc;
+	t_canvas	*cnv;
+	t_coord		d;
+
 	if (argc != 2)
 		return (printf("...\n"));
 	data_init(argv[1]);
-	t_figure	*fig = ((t_figure *)ft_lstlast(g_data.figures)->content);
-	t_sphere	*sp = fig->param;
-	t_canvas	*cnv = ((t_canvas *)g_data.cnvs->content);
-	printf("%f\n", sp->radius);
-	printf("%.f\n", cnv->cam.ang.z);
-	printf("%.i\n", cnv->img.lnlen);
-	for	(int i = 0; i < g_data.win.height; i++)
-		for (int j = 0; j < g_data.win.width; j++)
-			mlx_pixel_put(g_data.mlx, g_data.win.ptr, j, i,
-				trgb_init(0, i * 256 / g_data.win.height, j * 256 / g_data.win.width,
-				trgb_get_b(g_data.amb.color) * g_data.amb.ratio));
+	cnv = (t_canvas *)(g_data.cnvs->content);
+	d.z = 1;
+	d.y = .5;
+	while (d.y > -.5)
+	{
+		d.x = -0.5;
+		while (d.x < .5)
+		{
+			int color = raytrace(cnv->cam.pos, d, 1, INF);
+			mlx_pixel_put(g_data.mlx, g_data.win.ptr,
+				(d.x + .5) * g_data.win.w,
+				(.5 - d.y) * g_data.win.h,
+				color);
+			d.x += 1.0 / g_data.win.w;
+		}
+		d.y -= 1.0 / g_data.win.h;
+	}
 	mlx_loop(g_data.mlx);
 }

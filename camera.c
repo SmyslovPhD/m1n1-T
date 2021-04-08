@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 18:33:10 by kbraum            #+#    #+#             */
-/*   Updated: 2021/04/01 21:09:23 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/04/08 21:24:04 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	camera_init(char *line)
 		s++;
 	while (*s == ' ' || *s == '\t')
 		s++;
-	if (*s != '\0' || cam->fov < 90 || cam->fov > 180)
+	if (*s != '\0' || cam->fov < 60 || cam->fov > 180)
 		minirt_exit(line);
 	ft_lstadd_back(&g_data.cnvs, ft_lstnew((void *)cnv));
 }
@@ -48,7 +48,7 @@ void	image_init(t_list *cnvs)
 	while (cnvs)
 	{
 		img = &((t_canvas *)cnvs->content)->img;
-		img->ptr = mlx_new_image(g_data.mlx, win->width, win->height);
+		img->ptr = mlx_new_image(g_data.mlx, win->w, win->h);
 		img->addr = mlx_get_data_addr(img->ptr,
 			&img->bpp, &img->lnlen, &img->endian);
 		cnvs = cnvs->next;

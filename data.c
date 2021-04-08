@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 19:30:38 by kbraum            #+#    #+#             */
-/*   Updated: 2021/04/05 21:19:38 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/04/08 21:17:19 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ static void
 	char	*s;
 
 	s = line;
-	ft_printf("LINESKIP");
 	while (s)
 		if (ft_strchr(" \t", *(s++)) == 0)
 			minirt_exit(line);
@@ -39,8 +38,7 @@ void	parse_file(int fd)
 		if (*line == 'A')
 			ambient_init(line);
 		if (*line == 'l')
-			//TODO light_init(line);
-			printf("Lht: %s\n", line);
+			light_init(line);
 		if (*line == 'c')
 			camera_init(line);
 		if (*line == 's')
@@ -57,15 +55,15 @@ void	data_init(char *file)
 	int		fd;
 
 	//TODO set all pointer to NULL
-	g_data.mlx = mlx_init();
-	if (g_data.mlx == 0)
-		minirt_exit(0);
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
 		minirt_exit(0);
 	parse_file(fd);
 	close(fd);
+	g_data.mlx = mlx_init();
+	if (g_data.mlx == 0)
+		minirt_exit(0);
 	g_data.win.ptr = mlx_new_window(g_data.mlx,
-		g_data.win.width, g_data.win.height, "miniRT");
+		g_data.win.w, g_data.win.h, "miniRT");
 	image_init(g_data.cnvs);
 }
