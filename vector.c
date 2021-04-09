@@ -6,19 +6,19 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/15 15:50:38 by kbraum            #+#    #+#             */
-/*   Updated: 2021/04/08 19:52:20 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/04/09 21:13:05 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-t_vector	vector_init(double x, double y, double z)
+t_vector	vector_init(t_coord a, t_coord b)
 {
 	t_vector	v;
 
-	v.x = x;
-	v.y = y;
-	v.z = z;
+	v.x = b.x - a.x;
+	v.y = b.y - a.y;
+	v.z = b.z - a.z;
 	return (v);
 }
 
@@ -45,14 +45,14 @@ t_vector	vector_sum(t_vector a, t_vector b)
 	return (c);
 }
 
-t_vector	get_vector(t_coord start, t_coord end)
+t_vector	vector_scale(t_coord d, double c)
 {
-	t_vector	v;
+	t_vector	cd;
 
-	v.x = end.x - start.x;
-	v.y = end.y - start.y;
-	v.z = end.z - start.z;
-	return (v);
+	cd.x = d.x * c;
+	cd.y = d.y * c;
+	cd.z = d.z * c;
+	return (cd);
 }
 
 double		vector_len(t_coord v)

@@ -9,7 +9,8 @@ SRCS 		=  main.c \
 			   data.c \
 			   window.c \
 			   camera.c \
-			   light.c
+			   light.c \
+			   color_fx.c
 
 OBJS		= $(SRCS:.c=.o)
 
@@ -34,11 +35,11 @@ RM			= rm -f
 all:		$(NAME)
 
 $(NAME):	${OBJS}
+			@$(MAKE) all -C $(LIBFT_F)
+			@$(MAKE) all -C $(MLX_F)
 			${CC} $(CFLAGS) $(LINK_FLAGS) -o $(NAME) $(OBJS)
 
 .c.o:		minirt.h 	
-			@$(MAKE) all -C $(LIBFT_F)
-			@$(MAKE) all -C $(MLX_F)
 			${CC} ${CFLAGS} ${OBJ_FLAGS} -c $< -o ${<:.c=.o}
 
 $(OBJS):	minirt.h

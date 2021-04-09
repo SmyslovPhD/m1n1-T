@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 20:23:35 by kbraum            #+#    #+#             */
-/*   Updated: 2021/04/08 23:21:07 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/04/09 21:37:45 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,18 +38,12 @@ typedef	struct	s_coord
 
 typedef	t_coord	t_vector;
 
-t_vector		vector_init(double x, double y, double z);
-t_vector		get_vector(t_coord start, t_coord end);
+t_vector		vector_init(t_coord a, t_coord b);
+t_vector		vector_scale(t_coord d, double c);
 t_vector		vector_sum(t_vector a, t_vector b);
 t_vector		vector_normalize(t_vector v);
 double			vector_len(t_coord v);
 double			dot_product(t_coord v1, t_coord v2);
-
-typedef struct	s_dot
-{
-	int			i;
-	int			j;
-}				t_dot;
 
 /*
 ** 				for canvas
@@ -115,7 +109,7 @@ typedef struct	s_sphere
 }				t_sphere;
 
 void			sphere_init(t_figure *fig, char *line);
-double			sphere_getdist(t_vector d, t_sphere *sp);
+double			sphere_getdist(t_coord o, t_coord d, t_sphere *sp);
 
 typedef struct	s_win
 {
@@ -169,6 +163,9 @@ void			minirt_exit(char *line);
 */
 
 void			figure_init(char *line);
-double			figure_getdist(t_coord d, t_figure *fig);
+double			figure_getdist(t_coord o, t_coord d, t_figure *fig);
+
+int				color_add(int c1, int c2);
+int				color_shade(int c, double *shade);
 
 #endif

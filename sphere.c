@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 20:22:28 by kbraum            #+#    #+#             */
-/*   Updated: 2021/04/08 23:45:29 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/04/09 17:43:35 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,24 +30,31 @@ void	sphere_init(t_figure *fig, char *line)
 		minirt_exit(line);
 }
 
-double	sphere_getdist(t_vector d, t_sphere *sp)
+double	sphere_getdist(t_coord o, t_coord d, t_sphere *sp)
 {
-	double		disc;
+	t_vector	od;
 	t_vector	co;
-	double		k[3];
+	double		k[6];
 
-	co = vector_init(-sp->pos.x, -sp->pos.y, -sp->pos.z);
-	k[0] = dot_product(d, d);
-	k[1] = 2 * dot_product(d, co);
-	k[2] = dot_product(co, co) - pow(sp->radius, 2);
-	disc = pow(k[1], 2) - 4 * k[0] * k[2];
-	if (disc < 0)
+	od = vector_init(o, d);
+	co = vector_init(sp->pos, o);
+	k[1] = dot_product(od, od);
+	k[2] = 2 * dot_product(od, co);
+	k[3] = dot_product(co, co) - pow(sp->radius, 2);
+	k[0] = k[2] * k[2] - 4 * k[1] * k[3];
+	if (k[0] < 0)
 		return (INF);
-	if (disc == 0)
-		return (pow(k[1], 2) / (2 * k[0]));
-	k[2] = (pow(k[1], 2) + sqrt(disc)) / (2 * k[0]);
-	k[1] = (pow(k[1], 2) - sqrt(disc)) / (2 * k[0]);
-	if (k[2] > k[1])
-		return (k[2]);
-	return (k[1]);
+	if (k[0] == 0)
+		return (-k[2] / (2 * k[1]));
+	k[4] = (-k[2] + sqrt(k[0])) / (2 * k[1]);
+	k[5] = (-k[2] - sqrt(k[0])) / (2 * k[1]);
+	if (k[4] > k[5])
+	{
+		k[3] = k[4];
+		k[4] = k[5];
+		k[5] = k[3];
+	}
+	if (k[4] >= vector_len(od))
+		return (k[4]);
+	return (k[5]);
 }
