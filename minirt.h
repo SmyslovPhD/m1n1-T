@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 20:23:35 by kbraum            #+#    #+#             */
-/*   Updated: 2021/04/09 21:37:45 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/04/12 18:54:05 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ typedef	struct	s_coord
 */
 
 typedef	t_coord	t_vector;
-
 t_vector		vector_init(t_coord a, t_coord b);
 t_vector		vector_scale(t_coord d, double c);
 t_vector		vector_sum(t_vector a, t_vector b);
@@ -102,6 +101,10 @@ typedef struct	s_figure
 	int			color;
 }				t_figure;
 
+void			figure_init(char *line);
+double			figure_getdist(t_figure *fig, t_coord o, t_coord d);
+t_figure		*figure_closest(t_coord o, t_coord d, double *dist);
+
 typedef struct	s_sphere
 {
 	t_coord		pos;
@@ -161,9 +164,6 @@ void			minirt_exit(char *line);
 /*
 **				figure_func
 */
-
-void			figure_init(char *line);
-double			figure_getdist(t_coord o, t_coord d, t_figure *fig);
 
 int				color_add(int c1, int c2);
 int				color_shade(int c, double *shade);

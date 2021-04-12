@@ -6,13 +6,13 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/24 21:20:39 by kbraum            #+#    #+#             */
-/*   Updated: 2021/04/09 14:31:05 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/04/12 18:57:13 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-void	figure_init(char *line)
+void		figure_init(char *line)
 {
 	t_figure	*fig;
 
@@ -26,12 +26,34 @@ void	figure_init(char *line)
 	ft_lstadd_back(&g_data.figures, ft_lstnew((void*)fig));
 }
 
-double	figure_getdist(t_coord o, t_coord d, t_figure *fig)
+double		figure_getdist(t_figure *fig, t_coord o, t_coord d)
 {
-	double	dist;
-
-	dist = INF;
 	if (fig->id == ID_SP)
-		dist = sphere_getdist(o, d, fig->param);
-	return (dist);
+		return (sphere_getdist(o, d, fig->param));
+	else
+		return (INF);
+}
+
+t_figure	*figure_closest(t_coord o, t_coord d, double *dist)
+{
+	t_figure	*fig;
+	double		start;
+	double		end;
+	t_list		*elem;
+
+	fig = 0;
+	start = vector_len(vector_init(o, d));
+	end = INF;
+	elem = g_data.figures;
+	while (elem)
+	{
+		*dist = figure_getdist(elem->content, o, d);
+		if (*dist > start && *dist < end)
+		{
+			end = *dist;
+			fig = elem->content;
+		}
+		elem = elem->next;
+	}
+	return (fig);
 }
