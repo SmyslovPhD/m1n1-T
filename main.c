@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 15:05:30 by kbraum            #+#    #+#             */
-/*   Updated: 2021/04/12 22:38:51 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/04/14 15:51:59 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,14 @@ void	minirt_exit(char *line)
 	exit(1);
 }
 
-int		trace_ray(t_coord o, t_coord d)
+int		trace_ray(t_coord o, t_coord d, double start, double end)
 {
-	t_list		*elem;
 	t_figure	*fig;
-	double		dist;
 
-	elem = g_data.figures;
-	fig = figure_closest(o, d, &dist);
+	fig = fig_closest(o, d, &start, end);
 	if (fig == 0)
-		return (0x5f5f5f);
-	return (fig->color);
+		return (0);
+	return (li_intersec(fig, vector_sum(o, vector_scale(d, start))));
 }
 
 int		main(int argc, char **argv)
@@ -42,25 +39,22 @@ int		main(int argc, char **argv)
 	t_canvas	*cnv;
 	t_coord		d;
 	double		w;
-	double		h;
 
 	if (argc != 2)
-		return (printf("...\n"));
+		return (printf("no args\n"));
 	data_init(argv[1]);
 	cnv = (t_canvas *)(g_data.cnvs->content);
 	w = tan(cnv->cam.fov * M_PI / 360);
-	h = w * g_data.win.h / g_data.win.w;
 	d.z = 1;
 	for (int i = 0; i < g_data.win.h; i++)
 	{
-		d.y = -h + (2 * h * i / g_data.win.h);
+		d.y = (g_data.win.h - 2. * i) * w / g_data.win.w;
 		for (int j = 0; j < g_data.win.w; j++)
 		{
-			d.x = -w + (2 * w * j / g_data.win.w);
+			d.x = w * (2. * j  / g_data.win.w - 1);
 			mlx_pixel_put(g_data.mlx, g_data.win.ptr,
-				j, i, trace_ray(cnv->cam.pos, d));
+				j, i, trace_ray(cnv->cam.pos, d, vector_len(d), INF));
 		}
 	}
-	printf("%f\n", h);
 	mlx_loop(g_data.mlx);
 }

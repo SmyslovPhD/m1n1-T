@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 20:23:35 by kbraum            #+#    #+#             */
-/*   Updated: 2021/04/12 18:54:05 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/04/14 15:52:48 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ typedef	struct	s_coord
 **				vector_func
 */
 
-typedef	t_coord	t_vector;
+typedef	
+t_coord			t_vector;
 t_vector		vector_init(t_coord a, t_coord b);
 t_vector		vector_scale(t_coord d, double c);
 t_vector		vector_sum(t_vector a, t_vector b);
@@ -77,6 +78,28 @@ void			image_init(t_list *cnvs);
 **				for scene
 */
 
+typedef struct	s_figure
+{
+	char		id;
+	void		*param;
+	int			color;
+}				t_figure;
+
+void			figure_init(char *line);
+double			figure_getdist(t_figure *fig, t_coord o, t_coord d);
+t_vector		fig_norm(t_figure *fig, t_coord p);
+t_figure		*fig_closest(t_coord o, t_coord d, double *start, double end);
+
+typedef struct	s_sphere
+{
+	t_coord		pos;
+	double		radius;
+}				t_sphere;
+
+void			sphere_init(t_figure *fig, char *line);
+double			sphere_getdist(t_coord o, t_coord d, t_sphere *sp);
+t_vector		sphere_norm(t_sphere *sp, t_coord p);
+
 typedef struct	s_amb
 {
 	double		ratio;
@@ -93,26 +116,7 @@ typedef struct	s_light
 }				t_light;
 
 void			light_init(char *line);
-
-typedef struct	s_figure
-{
-	char		id;
-	void		*param;
-	int			color;
-}				t_figure;
-
-void			figure_init(char *line);
-double			figure_getdist(t_figure *fig, t_coord o, t_coord d);
-t_figure		*figure_closest(t_coord o, t_coord d, double *dist);
-
-typedef struct	s_sphere
-{
-	t_coord		pos;
-	double		radius;
-}				t_sphere;
-
-void			sphere_init(t_figure *fig, char *line);
-double			sphere_getdist(t_coord o, t_coord d, t_sphere *sp);
+int				li_intersec(t_figure *fig, t_vector p);
 
 typedef struct	s_win
 {

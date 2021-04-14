@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/24 21:20:39 by kbraum            #+#    #+#             */
-/*   Updated: 2021/04/12 18:57:13 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/04/13 22:32:23 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,26 +34,39 @@ double		figure_getdist(t_figure *fig, t_coord o, t_coord d)
 		return (INF);
 }
 
-t_figure	*figure_closest(t_coord o, t_coord d, double *dist)
+t_vector	fig_norm(t_figure *fig, t_coord p)
 {
-	t_figure	*fig;
-	double		start;
-	double		end;
+	if (fig->id == ID_SP)
+		return (sphere_norm(fig->param, p));
+	else
+		return ((t_vector){0, 0, 0});
+}
+
+t_figure	*fig_closest(t_coord o, t_coord d, double *start, double end)
+{
 	t_list		*elem;
+	double		reserve_start;
+	double		dist;
+	t_figure	*fig;
 
 	fig = 0;
-	start = vector_len(vector_init(o, d));
-	end = INF;
+	if (start == 0)
+	{
+		start = &reserve_start;
+		reserve_start = 0;
+	}
 	elem = g_data.figures;
 	while (elem)
 	{
-		*dist = figure_getdist(elem->content, o, d);
-		if (*dist > start && *dist < end)
+		dist = figure_getdist(elem->content, o, d);
+		if (dist > *start && dist < end)
 		{
-			end = *dist;
+			end = dist;
 			fig = elem->content;
 		}
 		elem = elem->next;
 	}
+	if (fig)
+		*start = end;
 	return (fig);
 }
