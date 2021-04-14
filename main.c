@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 15:05:30 by kbraum            #+#    #+#             */
-/*   Updated: 2021/04/14 15:51:59 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/04/14 16:40:20 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int		trace_ray(t_coord o, t_coord d, double start, double end)
 	fig = fig_closest(o, d, &start, end);
 	if (fig == 0)
 		return (0);
-	return (li_intersec(fig, vector_sum(o, vector_scale(d, start))));
+	return (li_intersec(fig, vec_sum(o, vec_scale(d, start))));
 }
 
 int		main(int argc, char **argv)
@@ -53,7 +53,7 @@ int		main(int argc, char **argv)
 		{
 			d.x = w * (2. * j  / g_data.win.w - 1);
 			mlx_pixel_put(g_data.mlx, g_data.win.ptr,
-				j, i, trace_ray(cnv->cam.pos, d, vector_len(d), INF));
+				j, i, trace_ray(cnv->cam.pos, d, vec_len(d), INF));
 		}
 	}
 	mlx_loop(g_data.mlx);

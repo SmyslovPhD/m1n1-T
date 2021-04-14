@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 20:23:35 by kbraum            #+#    #+#             */
-/*   Updated: 2021/04/14 15:52:48 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/04/14 16:11:33 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,17 +33,17 @@ typedef	struct	s_coord
 }				t_coord;
 
 /*
-**				vector_func
+**				vec_func
 */
 
 typedef	
-t_coord			t_vector;
-t_vector		vector_init(t_coord a, t_coord b);
-t_vector		vector_scale(t_coord d, double c);
-t_vector		vector_sum(t_vector a, t_vector b);
-t_vector		vector_normalize(t_vector v);
-double			vector_len(t_coord v);
-double			dot_product(t_coord v1, t_coord v2);
+t_coord			t_vec;
+t_vec			vec_init(t_coord a, t_coord b);
+t_vec			vec_scale(t_coord d, double c);
+t_vec			vec_sum(t_vec a, t_vec b);
+t_vec			vec_norm(t_vec v);
+double			vec_len(t_coord v);
+double			vec_dot(t_coord v1, t_coord v2);
 
 /*
 ** 				for canvas
@@ -61,7 +61,7 @@ typedef struct	s_img
 typedef	struct	s_camera
 {
 	t_coord		pos;
-	t_vector	ang;
+	t_vec	ang;
 	int			fov;
 }				t_camera;
 
@@ -87,7 +87,7 @@ typedef struct	s_figure
 
 void			figure_init(char *line);
 double			figure_getdist(t_figure *fig, t_coord o, t_coord d);
-t_vector		fig_norm(t_figure *fig, t_coord p);
+t_vec		fig_norm(t_figure *fig, t_coord p);
 t_figure		*fig_closest(t_coord o, t_coord d, double *start, double end);
 
 typedef struct	s_sphere
@@ -98,7 +98,7 @@ typedef struct	s_sphere
 
 void			sphere_init(t_figure *fig, char *line);
 double			sphere_getdist(t_coord o, t_coord d, t_sphere *sp);
-t_vector		sphere_norm(t_sphere *sp, t_coord p);
+t_vec		sphere_norm(t_sphere *sp, t_coord p);
 
 typedef struct	s_amb
 {
@@ -116,7 +116,7 @@ typedef struct	s_light
 }				t_light;
 
 void			light_init(char *line);
-int				li_intersec(t_figure *fig, t_vector p);
+int				li_intersec(t_figure *fig, t_vec p);
 
 typedef struct	s_win
 {
@@ -159,7 +159,7 @@ int				trgb_get_b(int trgb);
 */
 
 int				read_coord(char **line, t_coord *dot);
-int				read_vector(char **line, t_vector *v);
+int				read_vec(char **line, t_vec *v);
 int				read_color(char **line, int *color);
 int				read_double(char **line, double *j);
 

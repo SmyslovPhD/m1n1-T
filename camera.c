@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 18:33:10 by kbraum            #+#    #+#             */
-/*   Updated: 2021/04/08 21:24:04 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/04/14 16:20:32 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	camera_init(char *line)
 		minirt_exit(line);
 	cam = &(cnv->cam);
 	s = line + 1;
-	if (read_coord(&s, &(cam->pos)) == 0 || read_vector(&s, &(cam->ang)) == 0)
+	if (read_coord(&s, &(cam->pos)) == 0 || read_vec(&s, &(cam->ang)) == 0)
 		minirt_exit(line);
 	cam->fov = ft_atoi(s);
 	while (*s == ' ' || *s == '\t')

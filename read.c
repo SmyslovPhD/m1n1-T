@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 15:24:48 by kbraum            #+#    #+#             */
-/*   Updated: 2021/04/01 20:53:46 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/04/14 16:11:51 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,18 +34,18 @@ int			read_coord(char **line, t_coord *dot)
 	return (1);
 }
 
-int			read_vector(char **line, t_vector *v)
+int			read_vec(char **line, t_vec *v)
 {
 	double		len;
 
 	if (read_coord(line, v) == 0)
 		return (0);
-	len = vector_len(*v);
+	len = vec_len(*v);
 	if (len > 1.004 || len < .995)
 		ft_printf("Error\n vector sells, but who's buying?\n");
 	if (len == 0)
 		return (0);
-	*v = vector_normalize(*v);
+	*v = vec_norm(*v);
 	return (1);
 }
 

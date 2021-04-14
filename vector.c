@@ -6,15 +6,15 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/15 15:50:38 by kbraum            #+#    #+#             */
-/*   Updated: 2021/04/13 21:15:25 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/04/14 16:02:31 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-t_vector	vector_init(t_coord a, t_coord b)
+t_vec	vec_init(t_coord a, t_coord b)
 {
-	t_vector	v;
+	t_vec	v;
 
 	v.x = b.x - a.x;
 	v.y = b.y - a.y;
@@ -22,21 +22,21 @@ t_vector	vector_init(t_coord a, t_coord b)
 	return (v);
 }
 
-t_vector	vector_normalize(t_vector v)
+t_vec	vec_norm(t_vec v)
 {
-	t_vector	vn;
+	t_vec		vn;
 	double		len;
 
-	len = vector_len(v);
+	len = vec_len(v);
 	vn.x = v.x / len;
 	vn.y = v.y / len;
 	vn.z = v.z / len;
 	return (vn);
 }
 
-t_vector	vector_sum(t_vector a, t_vector b)
+t_vec	vec_sum(t_vec a, t_vec b)
 {
-	t_vector	c;
+	t_vec	c;
 
 	c.x = a.x + b.x;
 	c.y = a.y + b.y;
@@ -45,9 +45,9 @@ t_vector	vector_sum(t_vector a, t_vector b)
 	return (c);
 }
 
-t_vector	vector_scale(t_coord d, double c)
+t_vec	vec_scale(t_vec d, double c)
 {
-	t_vector	cd;
+	t_vec	cd;
 
 	cd.x = d.x * c;
 	cd.y = d.y * c;
@@ -55,12 +55,12 @@ t_vector	vector_scale(t_coord d, double c)
 	return (cd);
 }
 
-double		vector_len(t_coord v)
+double		vec_len(t_coord v)
 {
 	return (sqrt(v.x * v.x + v.y * v.y + v.z * v.z));
 }
 
-double		dot_product(t_coord v1, t_coord v2)
+double		vec_dot(t_vec v1, t_vec v2)
 {
 	return (v1.x * v2.x + v1.y * v2.y + v1.z * v2.z);
 }

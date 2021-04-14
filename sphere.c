@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 20:22:28 by kbraum            #+#    #+#             */
-/*   Updated: 2021/04/13 22:14:47 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/04/14 17:58:19 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,17 @@ void	sphere_init(t_figure *fig, char *line)
 
 double	sphere_getdist(t_coord o, t_coord d, t_sphere *sp)
 {
-	t_vector	od;
-	t_vector	co;
-	double		k[3];
-	double		disc;
-	double		t[2];
+	t_vec	od;
+	t_vec	co;
+	double	t[2];
+	double	k[3];
+	double	disc;
 
-	od = vector_init(o, d);
-	co = vector_init(sp->pos, o);
-	k[0] = dot_product(od, od);
-	k[1] = 2 * dot_product(od, co);
-	k[2] = dot_product(co, co) - pow(sp->radius, 2);
+	od = vec_init(o, d);
+	co = vec_init(sp->pos, o);
+	k[0] = vec_dot(od, od);
+	k[1] = 2 * vec_dot(od, co);
+	k[2] = vec_dot(co, co) - pow(sp->radius, 2);
 	disc = k[1] * k[1] - 4 * k[0] * k[2];
 	if (disc < 0)
 		return (INF);
@@ -50,18 +50,18 @@ double	sphere_getdist(t_coord o, t_coord d, t_sphere *sp)
 		return (-k[1] / (2 * k[0]));
 	t[0] = (-k[1] + sqrt(disc)) / (2 * k[0]);
 	t[1] = (-k[1] - sqrt(disc)) / (2 * k[0]);
-	if (t[0] > k[1])
+	if (t[0] > t[1])
 	{
 		k[2] = t[0];
 		t[0] = t[1];
 		t[1] = k[2];
 	}
-	if (t[0] >= vector_len(od))
+	if (t[0] >= vec_len(od))
 		return (t[0]);
 	return (t[1]);
 }
 
-t_vector	sphere_norm(t_sphere *sp, t_coord p)
+t_vec	sphere_norm(t_sphere *sp, t_coord p)
 {
-	return (vector_normalize(vector_init(sp->pos, p)));
+	return (vec_norm(vec_init(sp->pos, p)));
 }
