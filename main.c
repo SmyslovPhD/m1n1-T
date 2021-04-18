@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 15:05:30 by kbraum            #+#    #+#             */
-/*   Updated: 2021/04/14 16:40:20 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/04/18 22:14:39 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	minirt_exit(char *line)
 {
 	if (line)
 	{
-		ft_printf("Error\n\"%s\"\n", line);
+		printf("Error\n\"%s\"\n", line);
 		free(line);
 	}
 	exit(1);
@@ -31,7 +31,7 @@ int		trace_ray(t_coord o, t_coord d, double start, double end)
 	fig = fig_closest(o, d, &start, end);
 	if (fig == 0)
 		return (0);
-	return (li_intersec(fig, vec_sum(o, vec_scale(d, start))));
+	return (li_intersec(fig, vec_sum(o, vec_scale(vec_init(o, d), start))));
 }
 
 int		main(int argc, char **argv)
@@ -52,8 +52,10 @@ int		main(int argc, char **argv)
 		for (int j = 0; j < g_data.win.w; j++)
 		{
 			d.x = w * (2. * j  / g_data.win.w - 1);
-			mlx_pixel_put(g_data.mlx, g_data.win.ptr,
-				j, i, trace_ray(cnv->cam.pos, d, vec_len(d), INF));
+			mlx_pixel_put(g_data.mlx, g_data.win.ptr, j, i,
+				trace_ray(cnv->cam.pos, vec_sum(cnv->cam.pos,
+					vec_norm(coord_rot(rot_init(cnv->cam.ang), d))),
+					1, INF));
 		}
 	}
 	mlx_loop(g_data.mlx);

@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 20:23:35 by kbraum            #+#    #+#             */
-/*   Updated: 2021/04/14 16:11:33 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/04/18 19:41:24 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # include <fcntl.h>
 # include <errno.h>
 
-typedef	struct	s_coord
+typedef struct s_coord
 {
 	double		x;
 	double		y;
@@ -36,8 +36,8 @@ typedef	struct	s_coord
 **				vec_func
 */
 
-typedef	
-t_coord			t_vec;
+typedef t_coord	t_vec;
+
 t_vec			vec_init(t_coord a, t_coord b);
 t_vec			vec_scale(t_coord d, double c);
 t_vec			vec_sum(t_vec a, t_vec b);
@@ -58,10 +58,17 @@ typedef struct	s_img
 	int			endian;
 }				t_img;
 
+typedef struct	s_rot
+{
+	t_vec		x;
+	t_vec		y;
+	t_vec		z;
+}				t_rot;
+
 typedef	struct	s_camera
 {
 	t_coord		pos;
-	t_vec	ang;
+	t_vec		ang;
 	int			fov;
 }				t_camera;
 
@@ -171,5 +178,8 @@ void			minirt_exit(char *line);
 
 int				color_add(int c1, int c2);
 int				color_shade(int c, double *shade);
+
+t_coord			coord_rot(const t_rot rot, const t_coord p);
+t_rot			rot_init(const t_vec v);
 
 #endif

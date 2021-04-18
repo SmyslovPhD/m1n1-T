@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 18:33:41 by kbraum            #+#    #+#             */
-/*   Updated: 2021/04/14 17:08:45 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/04/18 21:37:38 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ void	intence_sum(double *intence, double ratio, int color)
 	int			i;
 	static int	(*f[3])(int) = {trgb_get_r, trgb_get_g, trgb_get_b};
 
-	i = -1;
-	while (++i < 3)
+	i = 3;
+	while (i--)
 		intence[i] += ratio * (f[i])(color) / 255;
 }
 
@@ -57,8 +57,9 @@ int	li_intersec(t_figure *fig, t_vec p)
 {
 	double		intence[3];
 	t_list		*elem;
-	t_vec	n;
-	t_vec	l;
+	t_light		*li;
+	t_vec		n;
+	t_vec		l;
 
 	intence[0] = 0;
 	intence[1] = 0;
@@ -68,12 +69,13 @@ int	li_intersec(t_figure *fig, t_vec p)
 	elem = g_data.lights;
 	while (elem)
 	{
-		l = vec_init(p, ((t_light *)elem->content)->pos);
+		li = elem->content;
+		l = vec_init(p, li->pos);
 		if (vec_dot(n, l) > 0
-			&& fig_closest(p, vec_sum(p, vec_norm(l)), 0, vec_len(l)) == 0)
-			intence_sum(intence, ((t_light *)elem->content)->ratio
-				* pow(vec_dot(n, l) / vec_len(l) / vec_len(n), 2),
-				((t_light *)elem->content)->color);
+			&& fig_closest(p, vec_sum(p, l), 0, vec_len(l)) == 0)
+			intence_sum(intence, 
+				li->ratio * pow(vec_dot(n, l) / vec_len(l) / vec_len(n), 2),
+				li->color);
 		elem = elem->next;
 	}
 	return (color_shade(fig->color, intence));

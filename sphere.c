@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 20:22:28 by kbraum            #+#    #+#             */
-/*   Updated: 2021/04/14 17:58:19 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/04/18 21:08:54 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	sphere_init(t_figure *fig, char *line)
 	s = line + 2;
 	if (read_coord(&s, &(sp->pos)) == 0
 		|| read_double(&s, &(sp->radius)) == 0
-		|| sp->radius < 0
+		|| sp->radius <= 0
 		|| read_color(&s, &(fig->color)) == 0)
 		minirt_exit(line);
 }
@@ -51,12 +51,8 @@ double	sphere_getdist(t_coord o, t_coord d, t_sphere *sp)
 	t[0] = (-k[1] + sqrt(disc)) / (2 * k[0]);
 	t[1] = (-k[1] - sqrt(disc)) / (2 * k[0]);
 	if (t[0] > t[1])
-	{
-		k[2] = t[0];
-		t[0] = t[1];
-		t[1] = k[2];
-	}
-	if (t[0] >= vec_len(od))
+		ft_swap(t, t + 1, sizeof(double));
+	if (t[0] > vec_len(od))
 		return (t[0]);
 	return (t[1]);
 }

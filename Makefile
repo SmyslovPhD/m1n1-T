@@ -3,6 +3,7 @@ NAME		= miniRT
 SRCS 		=  main.c \
 			   read.c \
 			   trgb.c \
+			   coord.c \
 			   vector.c \
 			   figure.c \
 			   sphere.c \
