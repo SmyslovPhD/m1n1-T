@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 18:33:41 by kbraum            #+#    #+#             */
-/*   Updated: 2021/04/18 21:37:38 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/04/19 22:08:21 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	li_intersec(t_figure *fig, t_vec p)
 		li = elem->content;
 		l = vec_init(p, li->pos);
 		if (vec_dot(n, l) > 0
-			&& fig_closest(p, vec_sum(p, l), 0, vec_len(l)) == 0)
+			&& fig_closest(p, vec_sum(p, vec_norm(l)), 0, vec_len(l)) == 0)
 			intence_sum(intence, 
 				li->ratio * pow(vec_dot(n, l) / vec_len(l) / vec_len(n), 2),
 				li->color);

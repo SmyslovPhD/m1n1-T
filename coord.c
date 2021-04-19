@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 20:57:26 by kbraum            #+#    #+#             */
-/*   Updated: 2021/04/18 21:52:43 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/04/18 22:32:12 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	rot_sincos(const t_vec v, double *s, double *c)
 {
 	c[0] = sqrt(v.x * v.x + v.z * v.z) / vec_len(v);
-	s[0] = 0;
+	s[0] = v.y / vec_len(v);
 	if (v.x == 0 && v.z == 0)
 	{
 		c[1] = 1;
@@ -59,11 +59,11 @@ t_coord		coord_rot(const t_rot rot, const t_coord p)
 	r.z = rot.x.z * p.x + rot.y.z * p.y + rot.z.z * p.z;
 	return (r);
 }
-//
+
 //int			main(void)
 //{
-//	t_coord	p = {0, 0, 1}, d;
-//	t_vec	v = {0, 0, -1};
+//	t_coord	p = {0, 1, 0}, d;
+//	t_vec	v = {1, 1, 1};
 //	t_rot	rot;
 //
 //	v = vec_norm(v);

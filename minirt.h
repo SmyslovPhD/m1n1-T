@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 20:23:35 by kbraum            #+#    #+#             */
-/*   Updated: 2021/04/18 19:41:24 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/04/19 20:30:51 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@ typedef struct	s_rot
 typedef	struct	s_camera
 {
 	t_coord		pos;
-	t_vec		ang;
-	int			fov;
+	t_rot		rot;
+	double		fov;
 }				t_camera;
 
 typedef	struct	s_canvas
@@ -79,7 +79,8 @@ typedef	struct	s_canvas
 }				t_canvas;
 
 void			camera_init(char *line);
-void			image_init(t_list *cnvs);
+void			image_init(void);
+void			pixel_put(t_img img, int x, int y, int color);
 
 /*
 **				for scene
@@ -94,7 +95,7 @@ typedef struct	s_figure
 
 void			figure_init(char *line);
 double			figure_getdist(t_figure *fig, t_coord o, t_coord d);
-t_vec		fig_norm(t_figure *fig, t_coord p);
+t_vec			fig_norm(t_figure *fig, t_coord p);
 t_figure		*fig_closest(t_coord o, t_coord d, double *start, double end);
 
 typedef struct	s_sphere
@@ -179,7 +180,7 @@ void			minirt_exit(char *line);
 int				color_add(int c1, int c2);
 int				color_shade(int c, double *shade);
 
-t_coord			coord_rot(const t_rot rot, const t_coord p);
 t_rot			rot_init(const t_vec v);
+t_coord			coord_rot(const t_rot rot, const t_coord p);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/24 21:20:39 by kbraum            #+#    #+#             */
-/*   Updated: 2021/04/18 20:58:09 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/04/19 19:48:36 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ t_figure	*fig_closest(t_coord o, t_coord d, double *start, double end)
 		}
 		elem = elem->next;
 	}
-	if (fig)
-		*start = end;
+	*start = end;
 	return (fig);
 }

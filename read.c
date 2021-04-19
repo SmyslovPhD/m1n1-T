@@ -6,10 +6,8 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 15:24:48 by kbraum            #+#    #+#             */
-/*   Updated: 2021/04/16 21:22:38 by kbraum           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
+/*   Updated: 2021/04/18 22:42:12 by kbraum           ###   ########.fr       */
+/*                                                                            */ /* ************************************************************************** */ 
 #include "minirt.h"
 
 int			read_coord(char **line, t_coord *dot)
@@ -41,10 +39,10 @@ int			read_vec(char **line, t_vec *v)
 	if (read_coord(line, v) == 0)
 		return (0);
 	len = vec_len(*v);
-	if (len > 1.004 || len < .995)
-		printf("Error\n vector sells, but who's buying?\n");
 	if (len == 0)
 		return (0);
+	if (len > 1.004 || len < .995)
+		printf("Error\n vector sells, but who's buying?\n");
 	*v = vec_norm(*v);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 19:30:38 by kbraum            #+#    #+#             */
-/*   Updated: 2021/04/12 19:23:34 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/04/19 20:31:56 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,5 @@ void	data_init(char *file)
 		minirt_exit(ft_strdup("mlx error!"));
 	g_data.win.ptr = mlx_new_window(g_data.mlx,
 		g_data.win.w, g_data.win.h, "miniRT");
-	image_init(g_data.cnvs);
+	image_init();
 }
