@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 15:05:30 by kbraum            #+#    #+#             */
-/*   Updated: 2021/04/19 22:11:49 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/04/19 23:00:53 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int		trace_ray(t_coord o, t_vec d)
 	if (fig == 0)
 		return (0);
 	d = vec_scale(d, dist);
-	return (li_intersec(fig, vec_sum(o, d)));
+	return (li_intersec(fig, o, vec_sum(o, d)));
 }
 
 void	render_image(t_canvas *cnv)
@@ -62,6 +62,7 @@ void	render_image(t_canvas *cnv)
 
 int		key_hook(int keycode, t_list **cnv)	//j
 {
+	printf("%d\n", keycode);
 	if (keycode == 49)
 	{
 		*cnv = (*cnv)->next;
@@ -69,7 +70,8 @@ int		key_hook(int keycode, t_list **cnv)	//j
 			*cnv = g_data.cnvs;
 		mlx_put_image_to_window(g_data.mlx, g_data.win.ptr,
 			((t_canvas *)(*cnv)->content)->img.ptr, 0, 0);
-	}	
+	} else if (keycode == 53)
+		minirt_exit(0);
 	return (0);
 }
 

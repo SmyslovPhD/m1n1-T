@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/24 21:20:39 by kbraum            #+#    #+#             */
-/*   Updated: 2021/04/19 19:48:36 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/04/19 23:03:29 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,10 @@ double		figure_getdist(t_figure *fig, t_coord o, t_coord d)
 		return (INF);
 }
 
-t_vec	fig_norm(t_figure *fig, t_coord p)
+t_vec	fig_norm(t_figure *fig, t_coord o, t_coord p)
 {
 	if (fig->id == ID_SP)
-		return (sphere_norm(fig->param, p));
+		return (sphere_norm(fig->param, o, p));
 	else
 		return ((t_vec){0, 0, 0});
 }
@@ -53,7 +53,7 @@ t_figure	*fig_closest(t_coord o, t_coord d, double *start, double end)
 	if (start == 0)
 	{
 		start = &reserve_start;
-		reserve_start = 1e-6;
+		reserve_start = 1e-10;
 	}
 	elem = g_data.figures;
 	while (elem)

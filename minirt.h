@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 20:23:35 by kbraum            #+#    #+#             */
-/*   Updated: 2021/04/19 20:30:51 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/04/19 22:52:56 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ typedef struct	s_figure
 
 void			figure_init(char *line);
 double			figure_getdist(t_figure *fig, t_coord o, t_coord d);
-t_vec			fig_norm(t_figure *fig, t_coord p);
+t_vec			fig_norm(t_figure *fig, t_coord o, t_coord p);
 t_figure		*fig_closest(t_coord o, t_coord d, double *start, double end);
 
 typedef struct	s_sphere
@@ -106,7 +106,7 @@ typedef struct	s_sphere
 
 void			sphere_init(t_figure *fig, char *line);
 double			sphere_getdist(t_coord o, t_coord d, t_sphere *sp);
-t_vec		sphere_norm(t_sphere *sp, t_coord p);
+t_vec			sphere_norm(t_sphere *sp, t_coord o, t_coord p);
 
 typedef struct	s_amb
 {
@@ -124,7 +124,7 @@ typedef struct	s_light
 }				t_light;
 
 void			light_init(char *line);
-int				li_intersec(t_figure *fig, t_vec p);
+int				li_intersec(t_figure *fig, t_coord o, t_coord p);
 
 typedef struct	s_win
 {

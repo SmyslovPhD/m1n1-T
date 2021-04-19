@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 18:33:41 by kbraum            #+#    #+#             */
-/*   Updated: 2021/04/19 22:08:21 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/04/19 22:51:41 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	intence_sum(double *intence, double ratio, int color)
 		intence[i] += ratio * (f[i])(color) / 255;
 }
 
-int	li_intersec(t_figure *fig, t_vec p)
+int	li_intersec(t_figure *fig, t_coord o, t_coord p)
 {
 	double		intence[3];
 	t_list		*elem;
@@ -65,7 +65,7 @@ int	li_intersec(t_figure *fig, t_vec p)
 	intence[1] = 0;
 	intence[2] = 0;
 	intence_sum(intence, g_data.amb.ratio, g_data.amb.color);
-	n = fig_norm(fig, p);
+	n = fig_norm(fig, o, p);
 	elem = g_data.lights;
 	while (elem)
 	{

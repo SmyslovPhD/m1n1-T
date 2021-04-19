@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 20:22:28 by kbraum            #+#    #+#             */
-/*   Updated: 2021/04/19 22:20:20 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/04/19 22:57:54 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,13 @@ double	sphere_getdist(t_coord o, t_coord d, t_sphere *sp)
 	return (t[1]);
 }
 
-t_vec	sphere_norm(t_sphere *sp, t_coord p)
+t_vec	sphere_norm(t_sphere *sp, t_coord o, t_coord p)
 {
 	t_vec	n;
 
-	n = vec_init(sp->pos, p);
-	return (vec_norm(n));
+	n = vec_norm(vec_init(sp->pos, p));
+	// TODO not sure about expr
+	if (vec_dot(n, vec_init(o, p)) > 0)
+		n = vec_scale(n, -1);
+	return (n);
 }
