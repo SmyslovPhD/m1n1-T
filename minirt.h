@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 20:23:35 by kbraum            #+#    #+#             */
-/*   Updated: 2021/04/20 21:37:41 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/04/20 23:21:24 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # define T_MIN	1e-6
 # define ID_SP	1
 # define ID_PL	2
+# define ID_SQ	3
 
 # include <mlx.h>
 # include <math.h>
@@ -124,6 +125,17 @@ typedef struct	s_plane
 void			plane_init(t_figure *fig, char *line);
 double			plane_getdist(t_plane *pl, t_coord o, t_coord d);
 t_vec			plane_normal(t_plane *pl, t_coord o, t_coord p);
+
+typedef struct	s_square
+{
+	t_coord		pos;
+	t_vec		n;
+	double		size;
+}				t_square;
+
+void			square_init(t_figure *fig, char *line);
+double			square_getdist(t_square *sq, t_coord o, t_coord d);
+t_vec			square_normal(t_square *sq, t_coord o, t_coord p);
 
 typedef struct	s_amb
 {

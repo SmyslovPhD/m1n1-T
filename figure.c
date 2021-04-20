@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/24 21:20:39 by kbraum            #+#    #+#             */
-/*   Updated: 2021/04/20 21:41:11 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/04/20 23:21:34 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ void		figure_init(char *line)
 		plane_init(fig, line);
 	else if (line[0] == 's' && line[1] == 'p')
 		sphere_init(fig, line);
+	else if (line[0] == 's' && line[1] == 'q')
+		square_init(fig, line);
 	else
 		minirt_exit(line);
 	ft_lstadd_back(&g_data.figures, ft_lstnew((void*)fig));
@@ -34,6 +36,8 @@ double		figure_getdist(t_figure *fig, t_coord o, t_coord d)
 		return (sphere_getdist(fig->param, o, d));
 	if (fig->id == ID_PL)
 		return (plane_getdist(fig->param, o, d));
+	if (fig->id == ID_SQ)
+		return (square_getdist(fig->param, o, d));
 	return (INF);
 }
 
@@ -43,6 +47,8 @@ t_vec	fig_normal(t_figure *fig, t_coord o, t_coord p)
 		return (sphere_normal(fig->param, o, p));
 	if (fig->id == ID_PL)
 		return (plane_normal(fig->param, o, p));
+	if (fig->id == ID_SQ)
+		return (square_normal(fig->param, o, p));
 	return ((t_vec){0, 0, 0});
 }
 

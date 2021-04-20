@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 19:30:38 by kbraum            #+#    #+#             */
-/*   Updated: 2021/04/20 20:17:19 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/04/20 23:33:14 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ static void
 	char	*s;
 
 	s = line;
-	while (s)
-		if (ft_strchr(" \t", *s++) == 0)
+	while (*s)
+		if (ft_strchr(" \t", *(s++)) == 0)
 			minirt_exit(line);
 }
 

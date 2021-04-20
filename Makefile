@@ -8,6 +8,7 @@ SRCS 		=  main.c \
 			   figure.c \
 			   sphere.c \
 			   plane.c \
+			   square.c \
 			   data.c \
 			   window.c \
 			   camera.c \
