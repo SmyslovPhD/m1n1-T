@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 19:30:38 by kbraum            #+#    #+#             */
-/*   Updated: 2021/04/19 20:31:56 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/04/20 20:17:19 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void
 
 	s = line;
 	while (s)
-		if (ft_strchr(" \t", *(s++)) == 0)
+		if (ft_strchr(" \t", *s++) == 0)
 			minirt_exit(line);
 }
 
@@ -32,19 +32,19 @@ void	parse_file(int fd)
 	while (n)
 	{
 		if (n < 0)
-			minirt_exit(line);
-		if (*line == 'R')
-			window_init(line);
-		if (*line == 'A')
-			ambient_init(line);
-		if (*line == 'l')
-			light_init(line);
-		if (*line == 'c')
-			camera_init(line);
-		if (*line == 's')
-			figure_init(line);
-		if (*line == ' ' || *line == '\t')
+			minirt_exit(line); //TODO errno
+		if (ft_strchr(" \t", *line)) 
 			line_skip(line);
+		else if (*line == 'R')
+			window_init(line);
+		else if (*line == 'A')
+			ambient_init(line);
+		else if (*line == 'l')
+			light_init(line);
+		else if (*line == 'c')
+			camera_init(line);
+		else if (ft_strchr("sp", *line))
+			figure_init(line);
 		free(line);
 		n = get_next_line(fd, &line);
 	}

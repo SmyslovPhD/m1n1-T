@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 20:23:35 by kbraum            #+#    #+#             */
-/*   Updated: 2021/04/19 22:52:56 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/04/20 21:37:41 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,23 @@
 
 # define MINIRT_H
 
-# define INF 0x10000000
-# define ID_SP 1
+# define INF	0x10000000
+# define T_MIN	1e-6
+# define ID_SP	1
+# define ID_PL	2
 
-# include "libft/libft.h"
 # include <mlx.h>
 # include <math.h>
 # include <stdio.h>
 # include <unistd.h>
 # include <fcntl.h>
-# include <errno.h>
+# include <sys/errno.h>
+# include <string.h>
+# include "libft/libft.h"
 
-typedef struct s_coord
+extern int		errno;
+
+typedef struct	s_coord
 {
 	double		x;
 	double		y;
@@ -81,6 +86,8 @@ typedef	struct	s_canvas
 void			camera_init(char *line);
 void			image_init(void);
 void			pixel_put(t_img img, int x, int y, int color);
+int				trace_ray(t_coord o, t_vec d);
+void			image_render(t_canvas *cnv);
 
 /*
 **				for scene
@@ -95,7 +102,7 @@ typedef struct	s_figure
 
 void			figure_init(char *line);
 double			figure_getdist(t_figure *fig, t_coord o, t_coord d);
-t_vec			fig_norm(t_figure *fig, t_coord o, t_coord p);
+t_vec			fig_normal(t_figure *fig, t_coord o, t_coord p);
 t_figure		*fig_closest(t_coord o, t_coord d, double *start, double end);
 
 typedef struct	s_sphere
@@ -105,8 +112,18 @@ typedef struct	s_sphere
 }				t_sphere;
 
 void			sphere_init(t_figure *fig, char *line);
-double			sphere_getdist(t_coord o, t_coord d, t_sphere *sp);
-t_vec			sphere_norm(t_sphere *sp, t_coord o, t_coord p);
+double			sphere_getdist(t_sphere *sp, t_coord o, t_coord d);
+t_vec			sphere_normal(t_sphere *sp, t_coord o, t_coord p);
+
+typedef struct	s_plane
+{
+	t_coord		pos;
+	t_vec		n;
+}				t_plane;
+
+void			plane_init(t_figure *fig, char *line);
+double			plane_getdist(t_plane *pl, t_coord o, t_coord d);
+t_vec			plane_normal(t_plane *pl, t_coord o, t_coord p);
 
 typedef struct	s_amb
 {
