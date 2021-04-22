@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/24 21:20:39 by kbraum            #+#    #+#             */
-/*   Updated: 2021/04/20 23:21:34 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/04/22 18:21:24 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,14 @@ void		figure_init(char *line)
 	ft_lstadd_back(&g_data.figures, ft_lstnew((void*)fig));
 }
 
-double		figure_getdist(t_figure *fig, t_coord o, t_coord d)
+double		figure_getdist(t_figure *fig, t_coord o, t_vec od, double min)
 {
 	if (fig->id == ID_SP)
-		return (sphere_getdist(fig->param, o, d));
+		return (sphere_getdist(fig->param, o, od, min));
 	if (fig->id == ID_PL)
-		return (plane_getdist(fig->param, o, d));
+		return (plane_getdist(fig->param, o, od));
 	if (fig->id == ID_SQ)
-		return (square_getdist(fig->param, o, d));
+		return (square_getdist(fig->param, o, od));
 	return (INF);
 }
 
@@ -52,23 +52,23 @@ t_vec	fig_normal(t_figure *fig, t_coord o, t_coord p)
 	return ((t_vec){0, 0, 0});
 }
 
-t_figure	*fig_closest(t_coord o, t_coord d, double *start, double end)
+t_figure	*fig_closest(t_coord o, t_vec od, double *start, double end)
 {
 	t_list		*elem;
-	double		reserve_start;
-	double		dist;
 	t_figure	*fig;
+	double		dist;
+	double		reserve_start;
 
-	fig = 0;
 	if (start == 0)
 	{
 		start = &reserve_start;
 		reserve_start = T_MIN;
 	}
+	fig = 0;
 	elem = g_data.figures;
 	while (elem)
 	{
-		dist = figure_getdist(elem->content, o, d);
+		dist = figure_getdist(elem->content, o, od, *start);
 		if (dist > *start && dist < end - T_MIN)
 		{
 			end = dist;

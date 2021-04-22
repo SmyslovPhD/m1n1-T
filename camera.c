@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 18:33:10 by kbraum            #+#    #+#             */
-/*   Updated: 2021/04/20 17:44:03 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/04/21 21:33:49 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,22 +63,22 @@ void	pixel_put(t_img img, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
-int		trace_ray(t_coord o, t_vec d)
+int		trace_ray(t_coord o, t_vec od)
 {
 	t_figure	*fig;
 	double		dist;
 
 	dist = 1;
-	fig = fig_closest(o, vec_sum(o, d), &dist, INF);
+	fig = fig_closest(o, od, &dist, INF);
 	if (fig == 0)
 		return (0);
-	d = vec_scale(d, dist);
-	return (li_intersec(fig, o, vec_sum(o, d)));
+	od = vec_scale(od, dist);
+	return (li_intersec(fig, o, vec_sum(o, od)));
 }
 
 void	image_render(t_canvas *cnv)
 {
-	t_coord		d;
+	t_vec		od;
 	double		w;
 	int			i;
 	int			j;
@@ -87,14 +87,14 @@ void	image_render(t_canvas *cnv)
 	i = g_data.win.h;
 	while (i--)
 	{
-		d.z = 1;
-		d.y = (g_data.win.h - 2. * i) * w / g_data.win.w;
+		od.z = 1;
+		od.y = (g_data.win.h - 2. * i) * w / g_data.win.w;
 		j = g_data.win.w;
 		while (j--)
 		{
-			d.x = w * (2. * j  / g_data.win.w - 1);
+			od.x = w * (2. * j  / g_data.win.w - 1);
 			pixel_put(cnv->img, j, i, trace_ray(cnv->cam.pos,
-				vec_norm(coord_rot(cnv->cam.rot, d))));
+				coord_rot(cnv->cam.rot, vec_norm(od))));
 		}
 	}
 }

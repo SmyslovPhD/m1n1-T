@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 20:23:35 by kbraum            #+#    #+#             */
-/*   Updated: 2021/04/20 23:21:24 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/04/22 19:41:27 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # define ID_SP	1
 # define ID_PL	2
 # define ID_SQ	3
+# define ID_TR	4
 
 # include <mlx.h>
 # include <math.h>
@@ -102,9 +103,9 @@ typedef struct	s_figure
 }				t_figure;
 
 void			figure_init(char *line);
-double			figure_getdist(t_figure *fig, t_coord o, t_coord d);
+double			figure_getdist(t_figure *fig, t_coord o, t_vec od, double min);
 t_vec			fig_normal(t_figure *fig, t_coord o, t_coord p);
-t_figure		*fig_closest(t_coord o, t_coord d, double *start, double end);
+t_figure		*fig_closest(t_coord o, t_vec od, double *start, double end);
 
 typedef struct	s_sphere
 {
@@ -113,7 +114,7 @@ typedef struct	s_sphere
 }				t_sphere;
 
 void			sphere_init(t_figure *fig, char *line);
-double			sphere_getdist(t_sphere *sp, t_coord o, t_coord d);
+double			sphere_getdist(t_sphere *sp, t_coord o, t_vec od, double min);
 t_vec			sphere_normal(t_sphere *sp, t_coord o, t_coord p);
 
 typedef struct	s_plane
@@ -123,7 +124,7 @@ typedef struct	s_plane
 }				t_plane;
 
 void			plane_init(t_figure *fig, char *line);
-double			plane_getdist(t_plane *pl, t_coord o, t_coord d);
+double			plane_getdist(t_plane *pl, t_coord o, t_vec od);
 t_vec			plane_normal(t_plane *pl, t_coord o, t_coord p);
 
 typedef struct	s_square
@@ -134,8 +135,20 @@ typedef struct	s_square
 }				t_square;
 
 void			square_init(t_figure *fig, char *line);
-double			square_getdist(t_square *sq, t_coord o, t_coord d);
+double			square_getdist(t_square *sq, t_coord o, t_vec od);
 t_vec			square_normal(t_square *sq, t_coord o, t_coord p);
+
+typedef struct	s_triangle
+{
+	t_coord		p0;
+	t_coord		p1;
+	t_coord		p2;
+	t_vec		n;
+}				t_triangle;
+
+void			triangle_init(t_figure *fig, char *line);
+double			triangle_getdist(t_triangle	*tr, t_coord o, t_vec od);
+t_vec			triangle_normal(t_triangle *tr, t_coord o, t_coord p);
 
 typedef struct	s_amb
 {

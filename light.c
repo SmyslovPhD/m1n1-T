@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 18:33:41 by kbraum            #+#    #+#             */
-/*   Updated: 2021/04/20 21:40:53 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/04/21 22:36:20 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	light_init(char *line)
 }
 
 static
-void	intence_sum(double *intence, double ratio, int color)
+void	intence_sum(double *intence, int color, double ratio)
 {
 	int			i;
 	static int	(*f[3])(int) = {trgb_get_r, trgb_get_g, trgb_get_b};
@@ -64,18 +64,17 @@ int	li_intersec(t_figure *fig, t_coord o, t_coord p)
 	intence[0] = 0;
 	intence[1] = 0;
 	intence[2] = 0;
-	intence_sum(intence, g_data.amb.ratio, g_data.amb.color);
+	intence_sum(intence, g_data.amb.color, g_data.amb.ratio);
 	n = fig_normal(fig, o, p);
 	elem = g_data.lights;
 	while (elem)
 	{
 		li = elem->content;
 		l = vec_init(p, li->pos);
-		if (vec_dot(n, l) > 0
-			&& fig_closest(p, vec_sum(p, vec_norm(l)), 0, vec_len(l)) == 0)
-			intence_sum(intence, 
-				li->ratio * pow(vec_dot(n, l) / vec_len(l) / vec_len(n), 2),
-				li->color);
+		if (vec_dot(n, l) > T_MIN
+			&& fig_closest(p, vec_norm(l), 0, vec_len(l)) == 0)
+			intence_sum(intence, li->color,
+				li->ratio * pow(vec_dot(n, l) / vec_len(l) / vec_len(n), 2));
 		elem = elem->next;
 	}
 	return (color_shade(fig->color, intence));

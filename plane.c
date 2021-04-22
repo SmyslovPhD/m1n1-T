@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/20 17:44:19 by kbraum            #+#    #+#             */
-/*   Updated: 2021/04/20 21:27:15 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/04/22 20:56:36 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,15 @@ void	plane_init(t_figure *fig, char *line)
 		minirt_exit(line);
 }
 
-double	plane_getdist(t_plane *pl, t_coord o, t_coord d)
+double	plane_getdist(t_plane *pl, t_coord o, t_vec od)
 {
 	double	t;
-	t_vec	od;
-
-	od = vec_init(o, d);
-	if (fabs(vec_dot(pl->n, od)) < T_MIN)
+	double	dot
+	
+	dot = vec_dot(pl->n, od);
+	if (fabs(dot) < T_MIN)
 		return (INF);
-	t = vec_dot(vec_init(o, pl->pos), pl->n) / vec_dot(od, pl->n);
+	t = vec_dot(vec_init(o, pl->pos), pl->n) / dot;
 	return (t);
 }
 

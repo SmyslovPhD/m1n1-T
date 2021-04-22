@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/20 17:44:19 by kbraum            #+#    #+#             */
-/*   Updated: 2021/04/20 23:36:33 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/04/21 19:44:51 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,17 +30,16 @@ void	square_init(t_figure *fig, char *line)
 		minirt_exit(line);
 }
 
-double	square_getdist(t_square *sq, t_coord o, t_coord d)
+double	square_getdist(t_square *sq, t_coord o, t_vec od)
 {
 	double	t;
-	t_vec	od;
+	t_coord p;
 
-	od = vec_init(o, d);
 	if (fabs(vec_dot(sq->n, od)) < T_MIN)
 		return (INF);
 	t = vec_dot(vec_init(o, sq->pos), sq->n) / vec_dot(od, sq->n);
-	if (vec_len(vec_init(sq->pos, vec_sum(o, vec_scale(od, t))))
-		> sq->size)
+	p = vec_sum(o, vec_scale(od, t));
+	if (vec_len(vec_init(sq->pos, p)) > sq->size / 2)
 		return (INF);
 	return (t);
 }
