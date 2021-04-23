@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/15 15:50:38 by kbraum            #+#    #+#             */
-/*   Updated: 2021/04/22 19:27:05 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/04/23 21:58:32 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ t_vec	vec_cross(t_vec a, t_vec b)
 	t_vec	c;
 	
 	c.x = a.y * b.z - a.z * b.y;
-	c.y = a.x * b.z - a.x * b.z;
-	c.z = a.x * b.y - a.y * b.y;
+	c.y = a.z * b.x - a.x * b.z;
+	c.z = a.x * b.y - a.y * b.x;
 	return (c);
 }
 

@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 19:30:38 by kbraum            #+#    #+#             */
-/*   Updated: 2021/04/20 23:33:14 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/04/23 20:24:07 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	parse_file(int fd)
 			light_init(line);
 		else if (*line == 'c')
 			camera_init(line);
-		else if (ft_strchr("sp", *line))
+		else if (ft_strchr("spt", *line))
 			figure_init(line);
 		free(line);
 		n = get_next_line(fd, &line);

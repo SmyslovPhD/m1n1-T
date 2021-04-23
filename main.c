@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 15:05:30 by kbraum            #+#    #+#             */
-/*   Updated: 2021/04/20 21:18:22 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/04/23 21:32:27 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	minirt_exit(char *line)
 	if (line)
 	{
 		exit_code = 1;
-		printf("Error\n\"%s\"\n", line);
+		printf("Error\n%s\n", line);
 		free(line);
 	}
 	else

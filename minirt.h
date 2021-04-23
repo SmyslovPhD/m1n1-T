@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 20:23:35 by kbraum            #+#    #+#             */
-/*   Updated: 2021/04/22 19:41:27 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/04/23 20:27:17 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ t_vec			vec_init(t_coord a, t_coord b);
 t_vec			vec_scale(t_coord d, double c);
 t_vec			vec_sum(t_vec a, t_vec b);
 t_vec			vec_norm(t_vec v);
+t_vec			vec_cross(t_vec a, t_vec b);
 double			vec_len(t_coord v);
 double			vec_dot(t_coord v1, t_coord v2);
 
@@ -143,6 +144,9 @@ typedef struct	s_triangle
 	t_coord		p0;
 	t_coord		p1;
 	t_coord		p2;
+	t_vec		e01;
+	t_vec		e12;
+	t_vec		e20;
 	t_vec		n;
 }				t_triangle;
 
