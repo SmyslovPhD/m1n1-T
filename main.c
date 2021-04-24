@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 15:05:30 by kbraum            #+#    #+#             */
-/*   Updated: 2021/04/23 21:32:27 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/04/24 23:00:16 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	minirt_exit(char *line)
 
 int		key_hook(int keycode, t_list **cnv)	//j
 {
-	printf("%d\n", keycode);
+	//printf("%d\n", keycode);
 	if (keycode == 49)
 	{
 		*cnv = (*cnv)->next;
