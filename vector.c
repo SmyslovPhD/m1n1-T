@@ -58,9 +58,9 @@ t_vec	vec_cross(t_vec a, t_vec b)
 {
 	t_vec	c;
 	
-	c.x = a.y * b.z - a.z * b.y;
-	c.y = a.z * b.x - a.x * b.z;
-	c.z = a.x * b.y - a.y * b.x;
+	c.x = a.z * b.y - a.y * b.z;
+	c.y = a.x * b.z - a.z * b.x;
+	c.z = a.y * b.x - a.x * b.y;
 	return (c);
 }
 
