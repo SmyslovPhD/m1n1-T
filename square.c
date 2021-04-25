@@ -6,47 +6,53 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/20 17:44:19 by kbraum            #+#    #+#             */
-/*   Updated: 2021/04/21 19:44:51 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/04/25 18:52:56 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
+static
+	void square_convert(t_square sq, t_figure *fig)
+{
+	t_figure	*fig_new;
+	t_triangle	*tr[2];
+	double		a;
+
+	fig_new = (t_figure *)malloc(sizeof(t_figure));
+	tr[0] = (t_triangle*)malloc(sizeof(t_triangle));
+	tr[1] = (t_triangle*)malloc(sizeof(t_triangle));
+	if (fig_new == 0 || tr[0] == 0 || tr[1] == 0)
+		minirt_exit(ft_strdup("malloc err"));
+	a = sq.size / 2;
+	fig->param = tr[0];
+	tr[0]->p1 = vec_sum(sq.pos, rotate(sq.rot, (t_vec){-a, -a, 0}));
+	tr[0]->p0 = vec_sum(sq.pos, rotate(sq.rot, (t_vec){a, a, 0}));
+	tr[0]->p2 = vec_sum(sq.pos, rotate(sq.rot, (t_vec){a, -a, 0}));
+	tr[0]->n = vec_cross(vec_init(tr[0]->p0, tr[0]->p1),
+		vec_init(tr[0]->p0, tr[0]->p2));
+	tr[1]->p0 = tr[0]->p0;
+	tr[1]->p1 = tr[0]->p1;
+	tr[1]->p2 = vec_scale(tr[0]->p2, -1);
+	tr[1]->n = vec_scale(tr[0]->n, -1);
+	fig_new->id = fig->id;
+	fig_new->param = (tr[1]);
+	fig_new->color = fig->color;
+	ft_lstadd_back(&g_data.figures, ft_lstnew(fig_new));
+}
+
 void	square_init(t_figure *fig, char *line)
 {
-	t_square	*sq;
+	t_square	sq;
 	char		*s;
 	
-	fig->id = ID_SQ;
-	sq = (t_square *)malloc(sizeof(t_square));
-	if (sq == 0)
-		minirt_exit(line); //TODO errno?
 	s = line + 2;
-	fig->param = sq;
-	if (read_coord(&s, &sq->pos) == 0
-		|| read_vec(&s, &sq->n) == 0
-		|| read_double(&s, &sq->size) == 0
+	fig->id = ID_TR;
+	if (read_coord(&s, &sq.pos) == 0
+		|| read_vec(&s, &sq.n) == 0
+		|| read_double(&s, &sq.size) == 0
 		|| read_color(&s, &fig->color) == 0)
-		minirt_exit(line);
-}
-
-double	square_getdist(t_square *sq, t_coord o, t_vec od)
-{
-	double	t;
-	t_coord p;
-
-	if (fabs(vec_dot(sq->n, od)) < T_MIN)
-		return (INF);
-	t = vec_dot(vec_init(o, sq->pos), sq->n) / vec_dot(od, sq->n);
-	p = vec_sum(o, vec_scale(od, t));
-	if (vec_len(vec_init(sq->pos, p)) > sq->size / 2)
-		return (INF);
-	return (t);
-}
-
-t_vec	square_normal(t_square *sq, t_coord o, t_coord p)
-{
-	if (vec_dot(sq->n, vec_init(o, p)) >= 0)
-		return (vec_scale(sq->n, -1));
-	return (sq->n);
+			minirt_exit(line);
+	sq.rot = rot_init(sq.n);
+	square_convert(sq, fig);
 }

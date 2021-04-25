@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 20:57:26 by kbraum            #+#    #+#             */
-/*   Updated: 2021/04/18 22:32:12 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/04/25 16:07:34 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ t_rot		rot_init(const t_vec v)
 	return (rot);
 }
 
-t_coord		coord_rot(const t_rot rot, const t_coord p)
+t_coord		rotate(const t_rot rot, const t_coord p)
 {
 	t_coord		r;
 
@@ -59,19 +59,3 @@ t_coord		coord_rot(const t_rot rot, const t_coord p)
 	r.z = rot.x.z * p.x + rot.y.z * p.y + rot.z.z * p.z;
 	return (r);
 }
-
-//int			main(void)
-//{
-//	t_coord	p = {0, 1, 0}, d;
-//	t_vec	v = {1, 1, 1};
-//	t_rot	rot;
-//
-//	v = vec_norm(v);
-//	rot = rot_init(v);
-//	d = coord_rot(rot, p);
-//	printf("x:%10lf\ny:%10lf\nz:%10lf\n", d.x, d.y, d.z);
-//	printf("\n%10lf, %10lf, %10lf", rot.x.x, rot.y.x, rot.z.x);
-//	printf("\n%10lf, %10lf, %10lf", rot.x.y, rot.y.y, rot.z.y);
-//	printf("\n%10lf, %10lf, %10lf", rot.x.z, rot.y.z, rot.z.z);
-//	printf("\n%f, %f\n", vec_len(p), vec_len(d));
-//}

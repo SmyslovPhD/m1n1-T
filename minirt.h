@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 20:23:35 by kbraum            #+#    #+#             */
-/*   Updated: 2021/04/24 23:52:40 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/04/25 16:51:32 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,13 @@
 
 # define MINIRT_H
 
+# define O		(t_vec)(0, 0, 0)
 # define INF	0x10000000
 # define T_MIN	1e-6
 # define ID_SP	1
 # define ID_PL	2
-# define ID_SQ	3
-# define ID_TR	4
+# define ID_TR	3
+# define ID_SQ	4
 
 # include <mlx.h>
 # include <math.h>
@@ -133,6 +134,7 @@ typedef struct	s_square
 	t_coord		pos;
 	t_vec		n;
 	double		size;
+	t_rot		rot;
 }				t_square;
 
 void			square_init(t_figure *fig, char *line);
@@ -226,6 +228,6 @@ int				color_add(int c1, int c2);
 int				color_shade(int c, double *shade);
 
 t_rot			rot_init(const t_vec v);
-t_coord			coord_rot(const t_rot rot, const t_coord p);
+t_coord			rotate(const t_rot rot, const t_coord p);
 
 #endif

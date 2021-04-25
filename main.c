@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 15:05:30 by kbraum            #+#    #+#             */
-/*   Updated: 2021/04/24 23:00:16 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/04/25 14:32:40 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ void	minirt_exit(char *line)
 	exit(exit_code);
 }
 
-int		key_hook(int keycode, t_list **cnv)	//j
+int	key_hook(int keycode, t_list **cnv)
 {
-	//printf("%d\n", keycode);
+//	printf("%d\n", keycode);
 	if (keycode == 49)
 	{
 		*cnv = (*cnv)->next;
@@ -39,12 +39,13 @@ int		key_hook(int keycode, t_list **cnv)	//j
 			*cnv = g_data.cnvs;
 		mlx_put_image_to_window(g_data.mlx, g_data.win.ptr,
 			((t_canvas *)(*cnv)->content)->img.ptr, 0, 0);
-	} else if (keycode == 53)
+	}
+	else if (keycode == 53)
 		minirt_exit(0);
 	return (0);
 }
 
-int		main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	t_list	*cnv;
 
@@ -57,6 +58,6 @@ int		main(int argc, char **argv)
 	cnv = g_data.cnvs;
 	mlx_put_image_to_window(g_data.mlx, g_data.win.ptr,
 		((t_canvas *)cnv->content)->img.ptr, 0, 0);
-	mlx_key_hook(g_data.win.ptr, key_hook, &cnv);	//k
+	mlx_key_hook(g_data.win.ptr, key_hook, &cnv);
 	mlx_loop(g_data.mlx);
 }

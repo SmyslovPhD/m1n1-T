@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 18:33:10 by kbraum            #+#    #+#             */
-/*   Updated: 2021/04/21 21:33:49 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/04/25 16:06:45 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void	image_render(t_canvas *cnv)
 		{
 			od.x = w * (2. * j  / g_data.win.w - 1);
 			pixel_put(cnv->img, j, i, trace_ray(cnv->cam.pos,
-				coord_rot(cnv->cam.rot, vec_norm(od))));
+				rotate(cnv->cam.rot, vec_norm(od))));
 		}
 	}
 }

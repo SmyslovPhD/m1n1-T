@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/22 18:37:50 by kbraum            #+#    #+#             */
-/*   Updated: 2021/04/25 00:42:55 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/04/25 18:58:19 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,41 +28,38 @@ void	triangle_init(t_figure *fig, char *line)
 		|| read_coord(&s, &tr->p2) == 0
 		|| read_color(&s, &fig->color) == 0)
 		minirt_exit(line);
-	//if (tr->p0.z < tr->p1.z)
-	//	ft_swap(&tr->p0, &tr->p1, sizeof(t_vec));
-	//if (tr->p0.z < tr->p2.z)
-	//	ft_swap(&tr->p0, &tr->p2, sizeof(t_vec));
-	//if (tr->p1.z < tr->p2.z)
-	//	ft_swap(&tr->p1, &tr->p2, sizeof(t_vec));
-	
-	tr->n = vec_norm(tr->n);
-	tr->e1 = vec_init(tr->p0, tr->p1);
-	tr->e2 = vec_init(tr->p0, tr->p2);
-	tr->n = vec_cross(tr->e1, tr->e2);
+	tr->n = vec_cross(vec_init(tr->p0, tr->p1), vec_init(tr->p0, tr->p2));
 	if (vec_len(tr->n) == 0)
 		minirt_exit(line);
 }
 
 double	triangle_getdist(t_triangle *tr, t_coord o, t_vec od)
 {
-    float	det = - vec_dot(od, tr->n);
-    if (fabs(det) < 1e-8)
+	double	d;
+	double	u;
+	double	v;
+	t_vec	tvec;
+	t_vec	qvec;
+
+//	static int k = 0;
+//	printf("\ntr%i\n", k);
+//	printf("p0:\t%f,\t%f,\t%f\n", tr->p0.x, tr->p0.y, tr->p0.z);
+//	printf("p1:\t%f,\t%f,\t%f\n", tr->p1.x, tr->p1.y, tr->p1.z);
+//	printf("p2:\t%f,\t%f,\t%f\n", tr->p2.x, tr->p2.y, tr->p2.z);
+//	k = (k + 1) % 2;
+
+    d = -vec_dot(od, tr->n);
+    if (fabs(d) < T_MIN)
         return (INF);
-
-    t_vec	pvec = vec_cross(od, tr->e2);
-
-    float	inv_det = 1 / det;
-    t_vec	tvec = vec_init(tr->p0, o);
-    float	u = vec_dot(tvec, pvec) * inv_det;
-    if (u < 0 || u > 1)
+    tvec = vec_init(tr->p0, o);
+    u = vec_dot(tvec, vec_cross(od, vec_init(tr->p0, tr->p2))) / d;
+    if (u < -T_MIN || u > 1 + T_MIN)
         return (INF);
-
-    t_vec qvec = vec_cross(tvec, tr->e1);
-    float v = vec_dot(od, qvec) * inv_det;
-    if (v < 0 || u + v > 1) {
-        return 0;
-    }
-    return vec_dot(tr->e2, qvec) * inv_det;
+    qvec = vec_cross(tvec, vec_init(tr->p0, tr->p1));
+    v = vec_dot(od, qvec) / d;
+    if (v < -T_MIN || u + v > 1 + T_MIN)
+        return (INF);
+    return vec_dot(vec_init(tr->p0, tr->p2), qvec) / d;
 }
 
 t_vec	triangle_normal(t_triangle *tr, t_coord o, t_coord p)
