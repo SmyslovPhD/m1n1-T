@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 15:05:30 by kbraum            #+#    #+#             */
-/*   Updated: 2021/04/25 14:32:40 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/04/27 22:42:42 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	minirt_exit(char *line)
 
 int	key_hook(int keycode, t_list **cnv)
 {
-//	printf("%d\n", keycode);
 	if (keycode == 49)
 	{
 		*cnv = (*cnv)->next;
@@ -45,19 +44,34 @@ int	key_hook(int keycode, t_list **cnv)
 	return (0);
 }
 
+int	minirt_close(int keycode, void *ptr)
+{
+	(void)ptr;
+	(void)keycode;
+	printf("Window close\n");
+	minirt_exit(0);
+	return (0);
+}
+
 int	main(int argc, char **argv)
 {
 	t_list	*cnv;
 
-	if (argc != 2)
-		return (printf("no args\n"));
+	if (argc != 2 && !(argc == 3 && ft_strncmp(argv[2], "--save", 7)))
+		return (printf("wrong args\n"));
+	g_data.mlx = mlx_init();
+	if (g_data.mlx == 0)
+		return (printf("mlx error!\n"));
 	data_init(argv[1]);
 	ft_lstiter(g_data.cnvs, (void (*)(void *))image_render);
-	if (g_data.cnvs == 0)
-		minirt_exit(ft_strdup("NO CAMS"));
+	if (argc == 3)
+		return (printf("Save in bmp\n"));
+	g_data.win.ptr = mlx_new_window(g_data.mlx,
+			g_data.win.w, g_data.win.h, "miniRT");
 	cnv = g_data.cnvs;
 	mlx_put_image_to_window(g_data.mlx, g_data.win.ptr,
 		((t_canvas *)cnv->content)->img.ptr, 0, 0);
 	mlx_key_hook(g_data.win.ptr, key_hook, &cnv);
+	mlx_hook(g_data.win.ptr, 17, 0, minirt_close, 0);
 	mlx_loop(g_data.mlx);
 }

@@ -9,6 +9,7 @@ SRCS 		=  main.c \
 			   sphere.c \
 			   plane.c \
 			   triangle.c \
+			   cylinder.c \
 			   square.c \
 			   data.c \
 			   window.c \

@@ -6,14 +6,14 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 19:30:38 by kbraum            #+#    #+#             */
-/*   Updated: 2021/04/23 20:24:07 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/04/27 21:56:45 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
 static void
-		line_skip(char *line)
+	line_skip(char *line)
 {
 	char	*s;
 
@@ -32,8 +32,8 @@ void	parse_file(int fd)
 	while (n)
 	{
 		if (n < 0)
-			minirt_exit(line); //TODO errno
-		if (ft_strchr(" \t", *line)) 
+			minirt_exit(line);
+		if (ft_strchr(" \t", *line))
 			line_skip(line);
 		else if (*line == 'R')
 			window_init(line);
@@ -41,9 +41,9 @@ void	parse_file(int fd)
 			ambient_init(line);
 		else if (*line == 'l')
 			light_init(line);
-		else if (*line == 'c')
+		else if (*line == 'c' && line[1] != 'y')
 			camera_init(line);
-		else if (ft_strchr("spt", *line))
+		else if (ft_strchr("sptc", *line))
 			figure_init(line);
 		free(line);
 		n = get_next_line(fd, &line);
@@ -54,16 +54,14 @@ void	data_init(char *file)
 {
 	int		fd;
 
-	//TODO set all pointer to NULL
+	if (ft_strncmp(file + ft_strlen(file) - 3, ".rt", 3) != 0)
+		minirt_exit(ft_strdup("It's not an .rt file"));
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
-		minirt_exit(0);
+		minirt_exit(strdup("Can't open file"));
 	parse_file(fd);
 	close(fd);
-	g_data.mlx = mlx_init();
-	if (g_data.mlx == 0)
-		minirt_exit(ft_strdup("mlx error!"));
-	g_data.win.ptr = mlx_new_window(g_data.mlx,
-		g_data.win.w, g_data.win.h, "miniRT");
+	if (g_data.cnvs == 0)
+		minirt_exit(ft_strdup("NO CAMS"));
 	image_init();
 }

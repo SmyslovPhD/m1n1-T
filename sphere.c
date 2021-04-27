@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 20:22:28 by kbraum            #+#    #+#             */
-/*   Updated: 2021/04/22 18:22:23 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/04/27 23:30:56 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	sphere_init(t_figure *fig, char *line)
 		|| sp->radius <= 0
 		|| read_color(&s, &(fig->color)) == 0)
 		minirt_exit(line);
+	sp->radius /= 2;
 }
 
 double	sphere_getdist(t_sphere *sp, t_coord o, t_vec od, double min)
@@ -43,7 +44,9 @@ double	sphere_getdist(t_sphere *sp, t_coord o, t_vec od, double min)
 	k[1] = 2 * vec_dot(od, co);
 	k[2] = vec_dot(co, co) - pow(sp->radius, 2);
 	disc = k[1] * k[1] - 4 * k[0] * k[2];
-	if (disc < 0) return (INF); if (disc == 0)
+	if (disc < 0)
+		return (INF);
+	if (disc == 0)
 		return (-k[1] / (2 * k[0]));
 	t[0] = (-k[1] - sqrt(disc)) / (2 * k[0]);
 	t[1] = (-k[1] + sqrt(disc)) / (2 * k[0]);
@@ -52,7 +55,8 @@ double	sphere_getdist(t_sphere *sp, t_coord o, t_vec od, double min)
 	p = vec_sum(o, vec_scale(od, t[0]));
 	if (t[0] > min)
 		return (t[0]);
-	return (t[1]); }
+	return (t[1]);
+}
 
 t_vec	sphere_normal(t_sphere *sp, t_coord o, t_coord p)
 {

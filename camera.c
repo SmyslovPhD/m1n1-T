@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 18:33:10 by kbraum            #+#    #+#             */
-/*   Updated: 2021/04/25 16:06:45 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/04/27 21:35:44 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	camera_init(char *line)
 	if (read_coord(&s, &cam->pos) == 0
 		|| read_vec(&s, &ang) == 0
 		|| read_double(&s, &cam->fov) == 0
-		|| cam->fov < 60 || cam->fov > 180) //TODO fov in [90; 180];
+		|| cam->fov < 60 || cam->fov > 180)
 		minirt_exit(line);
 	while (*s == ' ' || *s == '\t')
 		s++;
@@ -50,7 +50,7 @@ void	image_init(void)
 		img = &((t_canvas *)elem->content)->img;
 		img->ptr = mlx_new_image(g_data.mlx, win->w, win->h);
 		img->addr = mlx_get_data_addr(img->ptr,
-			&img->bpp, &img->lnlen, &img->endian);
+				&img->bpp, &img->lnlen, &img->endian);
 		elem = elem->next;
 	}
 }
@@ -63,7 +63,7 @@ void	pixel_put(t_img img, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
-int		trace_ray(t_coord o, t_vec od)
+int	trace_ray(t_coord o, t_vec od)
 {
 	t_figure	*fig;
 	double		dist;
@@ -92,9 +92,9 @@ void	image_render(t_canvas *cnv)
 		j = g_data.win.w;
 		while (j--)
 		{
-			od.x = w * (2. * j  / g_data.win.w - 1);
+			od.x = w * (2. * j / g_data.win.w - 1);
 			pixel_put(cnv->img, j, i, trace_ray(cnv->cam.pos,
-				rotate(cnv->cam.rot, vec_norm(od))));
+					rotate(cnv->cam.rot, vec_norm(od))));
 		}
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 18:33:41 by kbraum            #+#    #+#             */
-/*   Updated: 2021/04/21 22:36:20 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/04/27 22:25:02 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static
 void	intence_sum(double *intence, int color, double ratio)
 {
 	int			i;
-	static int	(*f[3])(int) = {trgb_get_r, trgb_get_g, trgb_get_b};
+	static	int	(*f[3])(int) = {trgb_get_r, trgb_get_g, trgb_get_b};
 
 	i = 3;
 	while (i--)

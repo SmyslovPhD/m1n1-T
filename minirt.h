@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 20:23:35 by kbraum            #+#    #+#             */
-/*   Updated: 2021/04/25 16:51:32 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/04/27 23:21:42 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,21 @@
 
 # define MINIRT_H
 
-# define O		(t_vec)(0, 0, 0)
 # define INF	0x10000000
 # define T_MIN	1e-6
 # define ID_SP	1
 # define ID_PL	2
 # define ID_TR	3
 # define ID_SQ	4
+# define ID_CY	5
 
-# include <mlx.h>
 # include <math.h>
 # include <stdio.h>
 # include <unistd.h>
 # include <fcntl.h>
 # include <sys/errno.h>
 # include <string.h>
+# include "mlx/mlx.h"
 # include "libft/libft.h"
 
 extern int		errno;
@@ -154,6 +154,21 @@ typedef struct	s_triangle
 void			triangle_init(t_figure *fig, char *line);
 double			triangle_getdist(t_triangle	*tr, t_coord o, t_vec od);
 t_vec			triangle_normal(t_triangle *tr, t_coord o, t_coord p);
+
+typedef struct	s_cylinder
+{
+	t_coord		pos;
+	t_vec		vec;
+	double		h;
+	double		r;
+	t_vec		par;
+	t_vec		perp;
+}				t_cylinder;
+
+void			cylinder_init(t_figure *fig, char *line);
+t_vec			vec_proj(t_vec vec, t_vec onto);
+double			cylinder_getdist(t_cylinder *cy, t_coord o, t_vec od, double min);
+t_vec			cylinder_normal(t_cylinder *cy, t_coord o, t_coord p);
 
 typedef struct	s_amb
 {
