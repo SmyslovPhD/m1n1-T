@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 20:22:28 by kbraum            #+#    #+#             */
-/*   Updated: 2021/04/27 23:30:56 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/04/28 19:27:43 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ void	sphere_init(t_figure *fig, char *line)
 	char		*s;
 
 	fig->id = ID_SP;
-	sp = (t_sphere*)malloc(sizeof(t_sphere));
+	sp = (t_sphere *)malloc(sizeof(t_sphere));
 	if (sp == 0)
-		minirt_exit(ft_strdup(strerror(errno)));
-	fig->param = (void*)sp;
+		minirt_exit(line);
+	fig->param = sp;
 	s = line + 2;
 	if (read_coord(&s, &(sp->pos)) == 0
 		|| read_double(&s, &(sp->radius)) == 0

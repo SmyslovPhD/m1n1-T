@@ -6,11 +6,21 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 20:57:26 by kbraum            #+#    #+#             */
-/*   Updated: 2021/04/27 21:37:08 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/04/28 19:25:23 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+
+t_vec	vec_init(t_coord a, t_coord b)
+{
+	t_vec	v;
+
+	v.x = b.x - a.x;
+	v.y = b.y - a.y;
+	v.z = b.z - a.z;
+	return (v);
+}
 
 static void	rot_sincos(const t_vec v, double *s, double *c)
 {

@@ -6,21 +6,11 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/15 15:50:38 by kbraum            #+#    #+#             */
-/*   Updated: 2021/04/24 19:38:15 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/04/28 19:23:41 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
-
-t_vec	vec_init(t_coord a, t_coord b)
-{
-	t_vec	v;
-
-	v.x = b.x - a.x;
-	v.y = b.y - a.y;
-	v.z = b.z - a.z;
-	return (v);
-}
 
 t_vec	vec_norm(t_vec v)
 {
@@ -52,16 +42,6 @@ t_vec	vec_scale(t_vec d, double c)
 	cd.y = d.y * c;
 	cd.z = d.z * c;
 	return (cd);
-}
-
-t_vec	vec_cross(t_vec a, t_vec b)
-{
-	t_vec	c;
-	
-	c.x = a.z * b.y - a.y * b.z;
-	c.y = a.x * b.z - a.z * b.x;
-	c.z = a.y * b.x - a.x * b.y;
-	return (c);
 }
 
 double	vec_len(t_coord v)

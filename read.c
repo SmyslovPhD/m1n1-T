@@ -5,34 +5,43 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/23 15:24:48 by kbraum            #+#    #+#             */
-/*   Updated: 2021/04/18 22:42:12 by kbraum           ###   ########.fr       */
-/*                                                                            */ /* ************************************************************************** */ 
+/*   Created: 2021/04/28 15:40:27 by kbraum            #+#    #+#             */
+/*   Updated: 2021/04/28 20:25:51 by kbraum           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minirt.h"
 
-int			read_coord(char **line, t_coord *dot)
+int	read_double(char **line, double *j)
 {
 	while (**line == ' ' || **line == '\t')
 		(*line)++;
-	if (!ft_isdigit(**line) && !ft_strchr("-.", **line))
+	if (!(ft_isdigit(**line) || **line == '.' || **line == '-'))
 		return (0);
-	dot->x = ft_atof(*line);
-	while (ft_isdigit(**line) || ft_strchr("-.", **line))
+	*j = ft_atof(*line);
+	*line += **line == '-';
+	while (ft_isdigit(**line))
 		(*line)++;
-	if (**line != ',')
-		return (0);
-	dot->y = ft_atof(++(*line));
-	while (ft_isdigit(**line) || ft_strchr("-.", **line))
-		(*line)++;
-	if (**line != ',')
-		return (0);
-	dot->z = ft_atof(++(*line));
-	while (ft_isdigit(**line) || ft_strchr("-.", **line))
+	*line += **line == '.';
+	while (ft_isdigit(**line))
 		(*line)++;
 	return (1);
 }
 
-int			read_vec(char **line, t_vec *v)
+int	read_coord(char **line, t_coord *dot)
+{
+	if (read_double(line, &dot->x) == 0)
+		return (0);
+	*line += **line == ',';
+	if (read_double(line, &dot->y) == 0)
+		return (0);
+	*line += **line == ',';
+	if (read_double(line, &dot->z) == 0)
+		return (0);
+	return (1);
+}
+
+int	read_vec(char **line, t_vec *v)
 {
 	double		len;
 
@@ -47,7 +56,7 @@ int			read_vec(char **line, t_vec *v)
 	return (1);
 }
 
-int			read_color(char **line, int *color)
+int	read_color(char **line, int *color)
 {
 	int		chanel[3];
 	int		i;
@@ -68,17 +77,5 @@ int			read_color(char **line, int *color)
 	if (**line != '\0')
 		return (0);
 	*color = trgb_init(0, chanel[0], chanel[1], chanel[2]);
-	return (1);
-}
-
-int			read_double(char **line, double *j)
-{
-	while (**line == ' ' || **line == '\t')
-		(*line)++;
-	if (!(ft_isdigit(**line) || **line == '.'))
-		return (0);
-	*j = ft_atof(*line);
-	while (ft_isdigit(**line) || **line == '.')
-		(*line)++;
 	return (1);
 }

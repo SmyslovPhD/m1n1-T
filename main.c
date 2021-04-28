@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 15:05:30 by kbraum            #+#    #+#             */
-/*   Updated: 2021/04/27 22:42:42 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/04/28 19:26:30 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,17 +55,23 @@ int	minirt_close(int keycode, void *ptr)
 
 int	main(int argc, char **argv)
 {
-	t_list	*cnv;
+	t_list		*cnv;
+	const char	flag[] = "--save";
 
-	if (argc != 2 && !(argc == 3 && ft_strncmp(argv[2], "--save", 7)))
+	if (argc != 2 && (argc != 3 || ft_strncmp(argv[2], flag, sizeof(flag) + 1)))
 		return (printf("wrong args\n"));
+	if (ft_strncmp(argv[1] + ft_strlen(argv[1]) - 3, ".rt", 3))
+		return (printf("It's not an .rt file\n"));
 	g_data.mlx = mlx_init();
 	if (g_data.mlx == 0)
 		return (printf("mlx error!\n"));
 	data_init(argv[1]);
 	ft_lstiter(g_data.cnvs, (void (*)(void *))image_render);
 	if (argc == 3)
-		return (printf("Save in bmp\n"));
+	{
+		ft_lstiter(g_data.cnvs, (void (*)(void *))screenshot);
+		return (0);
+	}
 	g_data.win.ptr = mlx_new_window(g_data.mlx,
 			g_data.win.w, g_data.win.h, "miniRT");
 	cnv = g_data.cnvs;

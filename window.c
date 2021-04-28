@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 20:29:50 by kbraum            #+#    #+#             */
-/*   Updated: 2021/04/27 23:44:41 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/04/28 19:51:15 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,7 @@ void	window_init(char *line)
 	char		*tmp;
 
 	win = &g_data.win;
-	if (win->ptr)
-		minirt_exit(line);
 	tmp = line + 1;
-	tmp++;
 	win->w = ft_atoi(tmp);
 	while (*tmp == ' ' || *tmp == '\t')
 		tmp++;
@@ -34,6 +31,11 @@ void	window_init(char *line)
 		tmp++;
 	while (*tmp == ' ' || *tmp == '\t')
 		tmp++;
-	if (win->w < 1 || win->h < 1)
+	if (win->w < 1 || win->h < 1 || win->is_set)
 		minirt_exit(line);
+	win->is_set = 1;
+	if (win->w > mlx_get_screen_width())
+		win->w = mlx_get_screen_width();
+	if (win->h > mlx_get_screen_height())
+		win->h = mlx_get_screen_height();
 }

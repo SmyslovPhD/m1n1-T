@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 18:33:41 by kbraum            #+#    #+#             */
-/*   Updated: 2021/04/27 22:25:02 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/04/28 19:48:47 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,12 @@ void	ambient_init(char *line)
 
 	amb = &g_data.amb;
 	s = line + 1;
-	if (read_double(&s, &amb->ratio) == 0
+	if (amb->is_set
+		||read_double(&s, &amb->ratio) == 0
 		|| read_color(&s, &amb->color) == 0
 		|| amb->ratio < 0 || amb->ratio > 1)
 		minirt_exit(line);
+	amb->is_set = 0;
 }
 
 void	light_init(char *line)

@@ -6,11 +6,21 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/22 18:37:50 by kbraum            #+#    #+#             */
-/*   Updated: 2021/04/27 22:21:46 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/04/28 19:28:06 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+
+t_vec	vec_cross(t_vec a, t_vec b)
+{
+	t_vec	c;
+
+	c.x = a.z * b.y - a.y * b.z;
+	c.y = a.x * b.z - a.z * b.x;
+	c.z = a.y * b.x - a.x * b.y;
+	return (c);
+}
 
 void	triangle_init(t_figure *fig, char *line)
 {

@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/20 17:44:19 by kbraum            #+#    #+#             */
-/*   Updated: 2021/04/23 20:23:28 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/04/28 15:39:37 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@ void	plane_init(t_figure *fig, char *line)
 {
 	t_plane	*pl;
 	char	*s;
-	
+
 	fig->id = ID_PL;
 	pl = (t_plane *)malloc(sizeof(t_plane));
 	if (pl == 0)
-		minirt_exit(line); //TODO errno?
+		minirt_exit(line);
 	s = line + 2;
 	fig->param = pl;
 	if (read_coord(&s, &pl->pos) == 0
@@ -33,7 +33,7 @@ double	plane_getdist(t_plane *pl, t_coord o, t_vec od)
 {
 	double	t;
 	double	dot;
-	
+
 	dot = vec_dot(pl->n, od);
 	if (fabs(dot) < T_MIN)
 		return (INF);

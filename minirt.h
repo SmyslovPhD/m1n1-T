@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 20:23:35 by kbraum            #+#    #+#             */
-/*   Updated: 2021/04/27 23:21:42 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/04/28 20:49:52 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@
 # include "mlx/mlx.h"
 # include "libft/libft.h"
 
-extern int		errno;
+extern int		g_errno;
 
-typedef struct	s_coord
+typedef struct s_coord
 {
 	double		x;
 	double		y;
@@ -58,7 +58,7 @@ double			vec_dot(t_coord v1, t_coord v2);
 ** 				for canvas
 */
 
-typedef struct	s_img
+typedef struct s_img
 {
 	void		*ptr;
 	char		*addr;
@@ -67,21 +67,21 @@ typedef struct	s_img
 	int			endian;
 }				t_img;
 
-typedef struct	s_rot
+typedef struct s_rot
 {
 	t_vec		x;
 	t_vec		y;
 	t_vec		z;
 }				t_rot;
 
-typedef	struct	s_camera
+typedef struct s_camera
 {
 	t_coord		pos;
 	t_rot		rot;
 	double		fov;
 }				t_camera;
 
-typedef	struct	s_canvas
+typedef struct s_canvas
 {
 	t_img		img;
 	t_camera	cam;
@@ -97,7 +97,7 @@ void			image_render(t_canvas *cnv);
 **				for scene
 */
 
-typedef struct	s_figure
+typedef struct s_figure
 {
 	char		id;
 	void		*param;
@@ -109,7 +109,7 @@ double			figure_getdist(t_figure *fig, t_coord o, t_vec od, double min);
 t_vec			fig_normal(t_figure *fig, t_coord o, t_coord p);
 t_figure		*fig_closest(t_coord o, t_vec od, double *start, double end);
 
-typedef struct	s_sphere
+typedef struct s_sphere
 {
 	t_coord		pos;
 	double		radius;
@@ -119,7 +119,7 @@ void			sphere_init(t_figure *fig, char *line);
 double			sphere_getdist(t_sphere *sp, t_coord o, t_vec od, double min);
 t_vec			sphere_normal(t_sphere *sp, t_coord o, t_coord p);
 
-typedef struct	s_plane
+typedef struct s_plane
 {
 	t_coord		pos;
 	t_vec		n;
@@ -129,7 +129,7 @@ void			plane_init(t_figure *fig, char *line);
 double			plane_getdist(t_plane *pl, t_coord o, t_vec od);
 t_vec			plane_normal(t_plane *pl, t_coord o, t_coord p);
 
-typedef struct	s_square
+typedef struct s_square
 {
 	t_coord		pos;
 	t_vec		n;
@@ -141,7 +141,7 @@ void			square_init(t_figure *fig, char *line);
 double			square_getdist(t_square *sq, t_coord o, t_vec od);
 t_vec			square_normal(t_square *sq, t_coord o, t_coord p);
 
-typedef struct	s_triangle
+typedef struct s_triangle
 {
 	t_coord		p0;
 	t_coord		p1;
@@ -155,7 +155,7 @@ void			triangle_init(t_figure *fig, char *line);
 double			triangle_getdist(t_triangle	*tr, t_coord o, t_vec od);
 t_vec			triangle_normal(t_triangle *tr, t_coord o, t_coord p);
 
-typedef struct	s_cylinder
+typedef struct s_cylinder
 {
 	t_coord		pos;
 	t_vec		vec;
@@ -167,18 +167,20 @@ typedef struct	s_cylinder
 
 void			cylinder_init(t_figure *fig, char *line);
 t_vec			vec_proj(t_vec vec, t_vec onto);
-double			cylinder_getdist(t_cylinder *cy, t_coord o, t_vec od, double min);
+double			cylinder_getdist(t_cylinder *cy,
+					t_coord o, t_vec od, double min);
 t_vec			cylinder_normal(t_cylinder *cy, t_coord o, t_coord p);
 
-typedef struct	s_amb
+typedef struct s_amb
 {
+	int			is_set;
 	double		ratio;
 	int			color;
 }				t_amb;
 
 void			ambient_init(char *line);
 
-typedef struct	s_light
+typedef struct s_light
 {
 	t_coord		pos;
 	double		ratio;
@@ -188,14 +190,15 @@ typedef struct	s_light
 void			light_init(char *line);
 int				li_intersec(t_figure *fig, t_coord o, t_coord p);
 
-typedef struct	s_win
+typedef struct s_win
 {
 	void		*ptr;
+	int			is_set;
 	int			w;
 	int			h;
 }				t_win;
 
-typedef	struct	s_data
+typedef struct s_data
 {
 	void		*mlx;
 	t_win		win;
@@ -244,5 +247,7 @@ int				color_shade(int c, double *shade);
 
 t_rot			rot_init(const t_vec v);
 t_coord			rotate(const t_rot rot, const t_coord p);
+
+void			screenshot(t_canvas *cnv);
 
 #endif

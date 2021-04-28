@@ -6,7 +6,7 @@
 /*   By: kbraum <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 19:30:38 by kbraum            #+#    #+#             */
-/*   Updated: 2021/04/27 21:56:45 by kbraum           ###   ########.fr       */
+/*   Updated: 2021/04/28 20:09:17 by kbraum           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ void	parse_file(int fd)
 	char	*line;
 
 	n = get_next_line(fd, &line);
+	if (n < 0)
+		minirt_exit(ft_strdup("Can't read file"));
 	while (n)
 	{
 		if (n < 0)
@@ -54,11 +56,11 @@ void	data_init(char *file)
 {
 	int		fd;
 
-	if (ft_strncmp(file + ft_strlen(file) - 3, ".rt", 3) != 0)
-		minirt_exit(ft_strdup("It's not an .rt file"));
-	fd = open(file, O_RDONLY);
+	fd = open(file, O_RDONLY | O_NOFOLLOW);
 	if (fd < 0)
 		minirt_exit(strdup("Can't open file"));
+	g_data.win.is_set = 0;
+	g_data.amb.is_set = 0;
 	parse_file(fd);
 	close(fd);
 	if (g_data.cnvs == 0)
